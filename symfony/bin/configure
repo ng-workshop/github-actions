@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+
+if [ ! -f .env.docker.local ]
+then
+  {
+    echo USER_ID="$(id -u)"
+    echo GROUP_ID="$(id -g)"
+  } >> .env.docker.local
+fi
+
+if ! grep --quiet '###> ci/symfony ###' /etc/hosts
+then
+  sudo bash -c 'cat << EOF >> /etc/hosts
+###> ci/symfony ###
+127.0.0.1 ci.symfony.local
+###< ci/symfony ###
+EOF'
+fi

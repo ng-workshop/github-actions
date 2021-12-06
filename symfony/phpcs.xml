@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset
+        name="ci-symfony rules set"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd">
+
+    <description>ci-symfony rule set project</description>
+
+    <arg name="report-full"/>
+    <arg name="report-junit" value="./var/reports/phpcs.xml"/>
+    <arg name="cache" value="./var/cache/.phpcs-cache"/>
+
+    <!-- Analyze files and directories -->
+    <file>bin/</file>
+    <file>config/</file>
+    <file>features/</file>
+    <file>migrations/</file>
+    <file>public/</file>
+    <file>src/</file>
+    <file>tests/</file>
+
+    <arg name="basepath" value="."/>
+    <arg name="cache" value=".phpcs-cache"/>
+    <arg name="colors"/>
+    <arg name="extensions" value="php"/>
+    <arg name="standard" value="phpcs.xml" />
+    <arg value="sp" />
+
+    <rule ref="PSR12"/>
+</ruleset>
