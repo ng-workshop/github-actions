@@ -51,7 +51,7 @@ install:
 	@make --silent setup-database
 
 setup-database:
-	@bin/wait-for.sh $(POSTGRES_DB):5432 --timeout 30
+	@bin/wait-for.sh $(POSTGRES_HOST):5432 --timeout 30
 ifneq ($(APP_ENV), prod)
 	@bin/console doctrine:database:create --if-not-exists --no-interaction --env $(APP_ENV)
 	@bin/console doctrine:schema:drop --full-database --force --no-interaction --env $(APP_ENV)
