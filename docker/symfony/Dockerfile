@@ -11,6 +11,7 @@ ENV COMPOSER_MEMORY_LIMIT -1
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 ADD ./conf.d /usr/local/etc/php/conf.d
+ADD ./entrypoint.sh /usr/local/bin/docker-symfony-entrypoint.sh
 
 RUN apk update \
     && apk add --no-cache --virtual build-deps \
@@ -24,6 +25,8 @@ RUN apk update \
         icu \
         libzip \
         make \
+        ncurses \
+        openssh \
         postgresql-dev \
         shadow \
         sudo \
@@ -31,23 +34,23 @@ RUN apk update \
     && docker-php-ext-install intl opcache pdo_pgsql pgsql zip \
     && pecl install apcu pcov xdebug \
     && docker-php-ext-enable apcu pcov xdebug \
-    && addgroup -g ${GROUP_ID} php \
-    && adduser -h /home/php -s bin/sh -G php -D -u ${USER_ID} php \
-    && echo "%php ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/php \
+    && addgroup -g ${GROUP_ID} symfony \
+    && adduser -h /home/symfony -s bin/sh -G symfony -D -u ${USER_ID} symfony \
+    && echo "%symfony ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/symfony \
     && passwd -l root \
     && passwd -d root \
+    && chmod a+x /usr/local/bin/docker-symfony-entrypoint.sh \
+    && chown symfony:symfony /usr/local/bin/docker-symfony-entrypoint.sh \
     && apk del --purge build-deps \
     && rm -rf /var/cache/apk/* \
     && rm -rf /tmp/*
 
-WORKDIR /app
+WORKDIR /var/www/symfony
 
-USER php
+USER symfony
 
 EXPOSE 9000
 
-ADD ./entrypoint.sh /home/php/entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/docker-symfony-entrypoint.sh"]
 
-ENTRYPOINT ["/home/php/entrypoint.sh"]
-
-CMD ["php-fpm", "-F"]
+CMD ["sh", "-c", "make install && php-fpm", "-F"]

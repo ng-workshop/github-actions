@@ -1,0 +1,4 @@
+/.env.docker.local
+/.ssh/*
+/log/*
+/cdn/astronauts/*

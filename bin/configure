@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+
+if [ ! -f .env.docker.local ]
+then
+  {
+    echo USER_ID="$(id -u)"
+    echo GROUP_ID="$(id -g)"
+  } >> .env.docker.local
+fi
+
+if ! grep --quiet '###> workshop-ci.local ###' /etc/hosts
+then
+  sudo bash -c 'cat << EOF >> /etc/hosts
+###> workshop-ci.local ###
+10.11.11.2 symfony.workshop-ci.local
+10.11.11.2 vuejs.workshop-ci.local
+10.11.11.2 cdn.workshop-ci.local
+10.11.11.5 postgres.workshop-ci.local
+10.11.11.6 ftp.workshop-ci.local
+###< workshop-ci.local ###
+
+EOF'
+fi
+
+rm -f .ssh/*
+ssh-keygen -t rsa -b 4096 -C "workshop-ci" -f .ssh/id_workshop-ci -N ""

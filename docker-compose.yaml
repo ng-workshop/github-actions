@@ -1,0 +1,90 @@
+version: '3.9'
+
+services:
+  nginx:
+    image: nginx:1.20-alpine
+    build:
+      context: ./docker/nginx
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+      - ./cdn:/var/www/static
+    depends_on:
+      - symfony
+      - vuejs
+    networks:
+      workshop-ci_network:
+        aliases:
+          - symfony.workshop-ci.local
+          - vuejs.workshop-ci.local
+          - cdn.workshop-ci.local
+        ipv4_address: 10.11.11.2
+
+  symfony:
+    image: registry.gitlab.com/ng-workshops/ci/symfony:latest
+    build:
+      context: ./docker/symfony
+    depends_on:
+      - postgres
+      - ftp
+    env_file:
+      - ./.env.docker.local
+      - ./.env
+      - ./symfony/.env
+    volumes:
+      - ./symfony:/var/www/symfony
+      - ~/.composer:/var/composer:cached
+      - ./.ssh/id_workshop-ci:/home/symfony/.ssh/id_workshop-ci
+      - ./.ssh/id_workshop-ci.pub:/home/symfony/.ssh/id_workshop-ci.pub
+    networks:
+      workshop-ci_network:
+        ipv4_address: 10.11.11.3
+
+  vuejs:
+    image: registry.gitlab.com/ng-workshops/ci/vuejs:latest
+    build:
+      context: ./docker/vuejs
+    env_file:
+      - ./.env.docker.local
+      - ./vuejs/.env
+    volumes:
+      - ./vuejs:/var/www/vuejs
+      - ~/.npm:/home/node/.npm:cached
+      - ~/.yarn:/home/node/.yarn:cached
+    networks:
+      workshop-ci_network:
+        ipv4_address: 10.11.11.4
+
+  postgres:
+    image: postgres:13-alpine
+    hostname: postgres
+    domainname: workshop-ci.local
+    env_file:
+      - ./.env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      workshop-ci_network:
+        ipv4_address: 10.11.11.5
+
+  ftp:
+    image: atmoz/sftp:alpine
+    volumes:
+      - ./docker/ftp/users.conf:/etc/sftp/users.conf:ro
+      - ./cdn:/home/symfony/upload
+      - ./.ssh/id_workshop-ci.pub:/home/symfony/.ssh/id_workshop-ci.pub
+    networks:
+      workshop-ci_network:
+        ipv4_address: 10.11.11.6
+
+networks:
+  workshop-ci_network:
+    name: workshop-ci
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.11.11.0/28
+
+volumes:
+  postgres_data: ~
+  cdn_data: ~
