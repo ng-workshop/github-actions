@@ -1,0 +1,11 @@
+# Read the documentation at https://github.com/thephpleague/flysystem-bundle/blob/master/docs/1-getting-started.md
+parameters:
+  cdn_storage_dir: '%kernel.project_dir%/var/storage/tests'
+  tmp_storage_dir: '%cdn_storage_dir%/tmp'
+
+flysystem:
+    storages:
+        cdn.storage:
+          adapter: 'local'
+          options:
+            directory: '%cdn_storage_dir%'

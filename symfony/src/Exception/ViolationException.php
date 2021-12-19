@@ -1,25 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Exception;
 
-use Exception;
-use Throwable;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 
-class ViolationException extends Exception
+final class ViolationException extends \Exception
 {
-    /**
-     * @param array<string, array<int, string>> $violations
-     */
-    public function __construct(private array $violations)
+    public function __construct(public ConstraintViolationListInterface $violations)
     {
         parent::__construct('', 0, null);
-    }
-
-    /**
-     * @return array<string, array<int, string>>
-     */
-    public function getViolations(): array
-    {
-        return $this->violations;
     }
 }

@@ -34,7 +34,6 @@
     <rule ref="Security.BadFunctions.EasyRFI"/>
     <rule ref="Security.BadFunctions.EasyXSS">
         <properties>
-            <!-- Comment out to follow global ParanoiaMode -->
             <property name="forceParanoia" value="1"/>
         </properties>
     </rule>

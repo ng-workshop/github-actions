@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\DataFixtures;
 
 use App\Entity\Astronaut;
-use App\Enum\PlanetEnum;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -17,33 +16,28 @@ final class AstronautFixtures extends Fixture
         return [
             'astronaut_1' => [
                 'username' => 'wilson',
-                'planet' => PlanetEnum::HQ->value, // @phpstan-ignore-line
+                'planet' => 'hq',
                 'email' => 'wilson@eleven-labs.com',
-                'avatar' => 'https://avatar.eleven-labs.com/wilson',
             ],
             'astronaut_2' => [
                 'username' => 'rocket raccoon',
-                'planet' => PlanetEnum::RACCOONS_OF_ASGARD->value, // @phpstan-ignore-line
+                'planet' => 'raccoons-of-asgard',
                 'email' => 'rocket-raccoon@eleven-labs.com',
-                'avatar' => 'https://avatar.eleven-labs.com/rocket-raccoon',
             ],
             'astronaut_3' => [
                 'username' => 'daffy duck',
-                'planet' => PlanetEnum::DUCK_INVADERS->value, // @phpstan-ignore-line
+                'planet' => 'duck-invaders',
                 'email' => 'daffy-duck@eleven-labs.com',
-                'avatar' => 'https://avatar.eleven-labs.com/daffy-duck',
             ],
             'astronaut_4' => [
                 'username' => 'po ping',
-                'planet' => PlanetEnum::DONUT_FACTORY->value, // @phpstan-ignore-line
+                'planet' => 'donut-factory',
                 'email' => 'po-ping@eleven-labs.com',
-                'avatar' => 'https://avatar.eleven-labs.com/po-ping',
             ],
             'astronaut_5' => [
                 'username' => 'chat potté',
-                'planet' => PlanetEnum::SCHIZO_CATS->value, // @phpstan-ignore-line
-                'email' => 'schizo-cats@eleven-labs.com',
-                'avatar' => 'https://avatar.eleven-labs.com/schizo-cats',
+                'planet' => 'schizo-cats',
+                'email' => 'chat-potte@eleven-labs.com',
             ]
         ];
     }
@@ -51,6 +45,7 @@ final class AstronautFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         foreach ($this->getAstronauts() as $ref => $data) {
+            $data['avatar'] = sprintf('planets/%s.png', $data['planet']);
             $astronaut = new Astronaut($data);
 
             $manager->persist($astronaut);

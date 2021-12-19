@@ -1,4 +1,4 @@
-COMPOSER_ARGS := --ignore-platform-reqs
+COMPOSER_ARGS :=
 CI ?= false
 
 ifeq ($(APP_ENV), prod)
@@ -6,7 +6,7 @@ ifeq ($(APP_ENV), prod)
 endif
 
 PHPMD_ARGS := . text phpmd.xml --suffixes php
-ifeq ($(CI),true)
+ifdef ($(CI_TYPE),true)
 	PHPMD_ARGS := . xml phpmd.xml --suffixes php --report-file var/reports/phpmd.xml
 endif
 
@@ -18,26 +18,40 @@ else
 	PHPSTAN_ARGS :=
 endif
 
-help:
-	@echo "help"
+BACKUP_APP_ENV := $(shell cat .env | grep "APP_ENV" | cut -d= -f2)
 
-configure:
-	@bin/configure
+RED=\e[31m
+GREEN=\e[32m
+YELLOW=\e[33m
+BLUE=\e[34m
+BOLD=\e[1m
+RESET=\e[0m
+
+define HELP
+$(BLUE)make [TARGET]$(RESET)
+
+$(BLUE)Target:$(RESET)
+	$(GREEN)install$(RESET)					$(YELLOW)description$(RESET)
+	$(GREEN)setup-database$(RESET)				$(YELLOW)description$(RESET)
+	$(GREEN)phpmd$(RESET)					$(YELLOW)description$(RESET)
+	$(GREEN)phpcs$(RESET)					$(YELLOW)description$(RESET)
+	$(GREEN)phpstan$(RESET)					$(YELLOW)description$(RESET)
+	$(GREEN)phpcs-security-audit$(RESET)			$(YELLOW)description$(RESET)
+	$(GREEN)phpunit$(RESET)					$(YELLOW)description$(RESET)
+	$(GREEN)behat$(RESET)					$(YELLOW)description$(RESET)
+$(RESET)
+endef
+export HELP
+
+help:
+	@printf "$$HELP"
 
 install:
-ifeq ($(shell whoami), php)
-ifneq ($(APP_ENV), prod)
 	@composer install $(COMPOSER_ARGS)
-endif
 	@make --silent setup-database
-else
-	@docker-compose up -d --force-recreate
-	@sleep 5
-	@docker-compose exec php sh -c "make install"
-endif
 
 setup-database:
-ifeq ($(shell whoami), php)
+	@bin/wait-for.sh $(POSTGRES_DB):5432 --timeout 30
 ifneq ($(APP_ENV), prod)
 	@bin/console doctrine:database:create --if-not-exists --no-interaction --env $(APP_ENV)
 	@bin/console doctrine:schema:drop --full-database --force --no-interaction --env $(APP_ENV)
@@ -46,50 +60,25 @@ endif
 ifneq ($(APP_ENV), prod)
 	@bin/console doctrine:fixtures:load --purge-with-truncate --no-interaction --env $(APP_ENV)
 endif
-else
-	@docker-compose exec php sh -c "make setup-database"
-endif
 
-phpmd:
-ifeq ($(shell whoami), php)
+phpmd: var/reports
 	@php -d error_reporting='E_ALL & ~E_NOTICE & ~E_DEPRECATED' ./vendor/bin/phpmd $(PHPMD_ARGS)
-else
-	@docker-compose exec php sh -c "make phpmd"
-endif
 
-phpcs:
-ifeq ($(shell whoami), php)
+phpcs: var/reports
 	@php ./vendor/bin/phpcs
-else
-	@docker-compose exec php sh -c "make phpcs"
-endif
 
-phpstan:
-ifeq ($(shell whoami), php)
+phpstan: var/reports
 	@php -d memory_limit=10G ./vendor/bin/phpstan analyse -c ./phpstan.neon $(PHPSTAN_ARGS)
-else
-	@docker-compose exec php sh -c "make phpcs-security-audit"
-endif
 
-phpcs-security-audit:
-ifeq ($(shell whoami), php)
+phpcs-security-audit: var/reports
 	@php ./vendor/bin/phpcs --standard=phpcs-security-audit.xml
-else
-	@docker-compose exec php sh -c "make phpcs-security-audit"
-endif
 
-phpunit:
-ifeq ($(shell whoami), php)
+phpunit: var/reports
 	@php ./vendor/bin/phpunit
-else
-	@docker-compose exec php sh -c "make phpunit"
-endif
 
-behat: ## inside container run APP_ENV=test
-ifeq ($(shell whoami), php)
+behat: var/reports ## Run this target with APP_ENV=test for use database test
 	@make --silent setup-database
 	@php ./vendor/bin/behat
-else
-	@docker-compose exec php sh -c "make behat"
-endif
 
+var/reports:
+	@mkdir -p $@

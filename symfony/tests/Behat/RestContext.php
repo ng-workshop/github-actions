@@ -22,7 +22,7 @@ class RestContext implements Context
     /** @var array<mixed,mixed> */
     private array $data = [];
 
-    public function __construct(string $baseUri = 'http://nginx')
+    public function __construct(string $baseUri)
     {
         $this->client = HttpClient::createForBaseUri($baseUri);
     }
@@ -53,6 +53,58 @@ class RestContext implements Context
             );
         } catch (\JsonException $jsonException) {
             throw new \InvalidArgumentException(sprintf('JSON not well formed: %s', $jsonException->getMessage()));
+        } catch (TransportExceptionInterface $transportException) { // @SuppressWarnings(PHPMD.EmptyCatchBlock)
+        }
+    }
+
+    #[when('I send a :method to :path with json data and temporary astronaut avatar')]
+    public function iSendRequestWithJsonDataWithTemporaryAvatar(
+        string $method,
+        string $path,
+        PyStringNode $jsonData
+    ): void {
+        $strings = [];
+        $numberOfSubstitutions = 0;
+
+        foreach ($jsonData->getStrings() as $string) {
+            if (1 === preg_match('/##TEMPORARY_ASTRONAUT_AVATAR##/', $string)) {
+                $string = str_replace('##TEMPORARY_ASTRONAUT_AVATAR##', $this->data['filename'], $string);
+                $numberOfSubstitutions++;
+            }
+
+            $strings[] = $string;
+        }
+
+        if (0 === $numberOfSubstitutions) {
+            throw new \Exception('No avatar replacement has been done.');
+        }
+
+        $this->iSendRequestWithJsonData($method, $path, new PyStringNode($strings, $jsonData->getLine()));
+    }
+
+    #[when('I send a :method to :path with file :filename')]
+    public function iSendRequestWithFile(string $method, string $path, string $filename): void
+    {
+        // phpcs:disable PHPCS_SecurityAudit.BadFunctions.FilesystemFunctions.WarnFilesystem
+        $filePath = \dirname(__DIR__) . '/Resources/' . $filename;
+        $type = pathinfo($filePath, PATHINFO_EXTENSION);
+        // phpcs:disable PHPCS_SecurityAudit.BadFunctions.FilesystemFunctions.WarnFilesystem
+        $data = file_get_contents($filePath);
+        // phpcs:disable PHPCS_SecurityAudit.BadFunctions.CryptoFunctions.WarnCryptoFunc
+        // @phpstan-ignore-next-line
+        $fileBase64Encoded = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+        try {
+            $this->response = $this->client->request(
+                $method,
+                $path,
+                [
+                    'headers' => [
+                        'Content-Type' => 'application/json',
+                    ],
+                    'json' => ['file' => $fileBase64Encoded],
+                ],
+            );
         } catch (TransportExceptionInterface $transportException) { // @SuppressWarnings(PHPMD.EmptyCatchBlock)
         }
     }
@@ -88,6 +140,19 @@ class RestContext implements Context
             $this->data = $this->response->toArray();
         } catch (HttpExceptionInterface | TransportExceptionInterface $e) {
             $this->data = $this->response->toArray(false);
+        }
+    }
+
+    #[Then('The json data have :key')]
+    public function theJsonDataHaveKey(mixed $key): void
+    {
+        if (false === isset($this->data[$key])) {
+            throw new \Exception(
+                sprintf(
+                    'The json data does not contain a "%s" key.',
+                    (string) $key,
+                ),
+            );
         }
     }
 

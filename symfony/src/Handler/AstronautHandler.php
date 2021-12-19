@@ -6,10 +6,12 @@ namespace App\Handler;
 
 use App\Entity\Astronaut;
 use App\Exception\AstronautNotFoundException;
+use App\Exception\GenerateAvatarPathException;
 use App\Exception\ViolationException;
 use App\Repository\AstronautRepository;
 use App\Validator\AstronautValidator;
 use Doctrine\ORM\EntityManagerInterface;
+use League\Flysystem\FilesystemException;
 
 final class AstronautHandler
 {
@@ -17,6 +19,7 @@ final class AstronautHandler
         private AstronautValidator $astronautValidator,
         private AstronautRepository $astronautRepository,
         private EntityManagerInterface $entityManager,
+        private AstronautAvatarHandler $astronautAvatarHandler,
     ) {
     }
 
@@ -24,19 +27,24 @@ final class AstronautHandler
      * @param array<string, mixed> $data
      *
      * @throws ViolationException
+     * @throws \Throwable
      */
     public function create(array $data): Astronaut
     {
-        $violations = $this->astronautValidator->validate($data);
-
-        if (0 !== count($violations)) {
-            throw new ViolationException($violations);
-        }
+        $this->astronautValidator->validate($data, false);
 
         $astronaut = new Astronaut($data);
+        $this->astronautAvatarHandler->update($astronaut);
 
-        $this->entityManager->persist($astronaut);
-        $this->entityManager->flush();
+        try {
+            $this->entityManager->persist($astronaut);
+            $this->entityManager->flush();
+        } catch (\Throwable $exception) {
+            // phpcs:disable PHPCS_SecurityAudit.BadFunctions.FilesystemFunctions.WarnFilesystem
+            $this->astronautAvatarHandler->delete($astronaut);
+
+            throw $exception;
+        }
 
         return $astronaut;
     }
@@ -64,19 +72,25 @@ final class AstronautHandler
     /**
      * @param array<string, mixed> $data
      *
-     * @throws AstronautNotFoundException|ViolationException
+     * @throws AstronautNotFoundException
+     * @throws GenerateAvatarPathException
+     * @throws FilesystemException
+     * @throws ViolationException
      */
     public function update(int $id, array $data, string $method = 'PATCH'): Astronaut
     {
+        $this->astronautValidator->validate($data, $method === 'PATCH');
+
         /** @var Astronaut $astronaut */
         $astronaut = $this->read($id);
-        $violations = $this->astronautValidator->validate($data, $method === 'PATCH');
+        $lastAvatar = $astronaut->avatar;
+        $astronaut->updateFromArray($data);
 
-        if (0 !== count($violations)) {
-            throw new ViolationException($violations);
+        if (array_key_exists('avatar', $data) && $data['avatar'] !== $lastAvatar) {
+            $this->astronautAvatarHandler->update($astronaut);
+            $this->astronautAvatarHandler->delete(new Astronaut(['avatar' => $lastAvatar]));
         }
 
-        $astronaut->updateFromArray($data);
         $this->entityManager->flush();
 
         return $astronaut;
@@ -84,13 +98,17 @@ final class AstronautHandler
 
     /**
      * @throws AstronautNotFoundException
+     * @throws FilesystemException
      */
     // phpcs:disable PHPCS_SecurityAudit.BadFunctions.FilesystemFunctions.WarnFilesystem
-    public function delete(int $id): void
+    public function delete(int $id): Astronaut
     {
         /** @var Astronaut $astronaut */
         $astronaut = $this->read($id);
         $this->entityManager->remove($astronaut);
         $this->entityManager->flush();
+        $this->astronautAvatarHandler->delete($astronaut);
+
+        return $astronaut;
     }
 }

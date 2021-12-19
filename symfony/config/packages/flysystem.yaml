@@ -1,0 +1,25 @@
+# Read the documentation at https://github.com/thephpleague/flysystem-bundle/blob/master/docs/1-getting-started.md
+parameters:
+    tmp_storage_dir: '%kernel.project_dir%/var/storage/tmp'
+    astronauts_storage_dir: 'astronauts'
+    planets_storage_dir: 'planets'
+
+flysystem:
+    storages:
+        cdn.storage:
+          adapter: 'sftp'
+          options:
+            host: '%env(FTP_HOST)%'
+            username: '%env(FTP_USER)%'
+            password: '%env(FTP_PASSWORD)%'
+            port: '%env(int:FTP_PORT)%'
+            root: '%env(FTP_ROOT_DIR)%'
+            privateKey: '%env(FTP_PRIVATE_KEY)%'
+            directoryPerm: 0766
+            permPublic: 0700
+            permPrivate: 0744
+            timeout: 10
+        tmp.storage:
+          adapter: 'local'
+          options:
+            directory: '%tmp_storage_dir%'

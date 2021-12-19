@@ -1,0 +1,12 @@
+parameters:
+  planets:
+    donut-factory:
+      name: 'Donut factory'
+    duck-invaders:
+      name: 'Duck invaders'
+    hq:
+      name: 'hq'
+    raccoons-of-asgard:
+      name: 'Raccoons of asgard'
+    schizo-cats:
+      name: 'Schizo cats'

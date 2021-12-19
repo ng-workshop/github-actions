@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Exception;
 
-use Exception;
-
-final class AstronautNotFoundException extends Exception
+final class AstronautNotFoundException extends \Exception
 {
     public function __construct(int $id)
     {

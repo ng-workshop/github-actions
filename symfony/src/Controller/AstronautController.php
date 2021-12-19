@@ -11,19 +11,27 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route(path: '/astronauts', name: 'astronauts_')]
 final class AstronautController
 {
-    public function __construct(private AstronautHandler $astronautHandler)
-    {
+    public function __construct(
+        private AstronautHandler $astronautHandler,
+        private SerializerInterface $serializer,
+    ) {
     }
 
     #[Route(path: '/{id}', name: 'get', requirements: ['id' => '\d+'], methods: 'GET')]
     public function get(?int $id = null): JsonResponse
     {
         try {
-            return new JsonResponse($this->astronautHandler->read($id), Response::HTTP_OK);
+            return new JsonResponse(
+                $this->serializer->serialize($this->astronautHandler->read($id), 'json', []),
+                Response::HTTP_OK,
+                [],
+                true,
+            );
         } catch (AstronautNotFoundException $astronautNotFoundException) {
             return new JsonResponse(['error' => $astronautNotFoundException->getMessage()], Response::HTTP_NOT_FOUND);
         } catch (\Throwable $exception) {
@@ -38,9 +46,19 @@ final class AstronautController
             $data = \json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
             $astronaut = $this->astronautHandler->create($data);
 
-            return new JsonResponse($astronaut, Response::HTTP_CREATED);
+            return new JsonResponse(
+                $this->serializer->serialize($astronaut, 'json', []),
+                Response::HTTP_CREATED,
+                [],
+                true
+            );
         } catch (ViolationException $violationException) {
-            return new JsonResponse(['error' => $violationException->getViolations()], Response::HTTP_BAD_REQUEST);
+            return new JsonResponse(
+                $this->serializer->serialize($violationException, 'json', []),
+                Response::HTTP_BAD_REQUEST,
+                [],
+                true,
+            );
         } catch (\JsonException $jsonException) {
             return new JsonResponse(['error' => $jsonException->getMessage()], Response::HTTP_BAD_REQUEST);
         } catch (\Throwable $exception) {
@@ -55,11 +73,21 @@ final class AstronautController
             $data = \json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
             $astronaut = $this->astronautHandler->update($id, $data);
 
-            return new JsonResponse($astronaut, Response::HTTP_OK);
+            return new JsonResponse(
+                $this->serializer->serialize($astronaut, 'json', []),
+                Response::HTTP_OK,
+                [],
+                true
+            );
         } catch (AstronautNotFoundException $astronautNotFoundException) {
             return new JsonResponse(['error' => $astronautNotFoundException->getMessage()], Response::HTTP_NOT_FOUND);
         } catch (ViolationException $violationException) {
-            return new JsonResponse(['error' => $violationException->getViolations()], Response::HTTP_BAD_REQUEST);
+            return new JsonResponse(
+                $this->serializer->serialize($violationException, 'json', []),
+                Response::HTTP_BAD_REQUEST,
+                [],
+                true,
+            );
         } catch (\JsonException $jsonException) {
             return new JsonResponse(['error' => $jsonException->getMessage()], Response::HTTP_BAD_REQUEST);
         } catch (\Throwable $exception) {
@@ -74,11 +102,21 @@ final class AstronautController
             $data = \json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
             $astronaut = $this->astronautHandler->update($id, $data, 'PUT');
 
-            return new JsonResponse($astronaut, Response::HTTP_OK);
+            return new JsonResponse(
+                $this->serializer->serialize($astronaut, 'json', []),
+                Response::HTTP_OK,
+                [],
+                true
+            );
         } catch (AstronautNotFoundException $astronautNotFoundException) {
             return new JsonResponse(['error' => $astronautNotFoundException->getMessage()], Response::HTTP_NOT_FOUND);
         } catch (ViolationException $violationException) {
-            return new JsonResponse(['error' => $violationException->getViolations()], Response::HTTP_BAD_REQUEST);
+            return new JsonResponse(
+                $this->serializer->serialize($violationException, 'json', []),
+                Response::HTTP_BAD_REQUEST,
+                [],
+                true,
+            );
         } catch (\JsonException $jsonException) {
             return new JsonResponse(['error' => $jsonException->getMessage()], Response::HTTP_BAD_REQUEST);
         } catch (\Throwable $exception) {

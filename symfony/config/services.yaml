@@ -4,7 +4,12 @@ services:
     _defaults:
         autowire: true
         autoconfigure: true
-
+        bind:
+            $cdnUrl: '%env(CDN_URL)%'
+            $planets: '%planets%'
+            $tmpStorageDir: '%tmp_storage_dir%'
+            $astronautsStorageDir: '%astronauts_storage_dir%'
+            $planetsStorageDir: '%planets_storage_dir%'
     App\:
         resource: '%kernel.project_dir%/src/'
         exclude:
@@ -16,3 +21,11 @@ services:
         resource: '%kernel.project_dir%/src/Controller/'
         tags:
             - controller.service_arguments
+
+    App\Validator\AstronautValidator:
+        arguments:
+            $constraints: '@App\Validator\Constraints\AstronautConstraints'
+
+    App\Validator\AstronautAvatarValidator:
+        arguments:
+            $constraints: '@App\Validator\Constraints\AstronautAvatarConstraints'
