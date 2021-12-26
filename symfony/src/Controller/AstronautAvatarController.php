@@ -21,7 +21,7 @@ final class AstronautAvatarController
     ) {
     }
 
-    #[Route(path: '/avatars', name: 'post', methods: 'POST')]
+    #[Route(path: '/avatars', name: 'post', methods: ['POST'])]
     public function post(Request $request): JsonResponse
     {
         try {

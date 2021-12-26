@@ -22,7 +22,7 @@ final class AstronautController
     ) {
     }
 
-    #[Route(path: '/{id}', name: 'get', requirements: ['id' => '\d+'], methods: 'GET')]
+    #[Route(path: '/{id}', name: 'get', requirements: ['id' => '\d+'], methods: ['GET'])]
     public function get(?int $id = null): JsonResponse
     {
         try {
