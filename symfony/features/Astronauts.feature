@@ -2,7 +2,7 @@ Feature:
   CRUD to astronauts
 
   Scenario: Call astronauts route
-    When I send a 'GET' request to '/astronauts/'
+    When I send a 'GET' request to '/astronauts'
     Then The status code is 200
     Then The data is json
     Then The json data have 5 items
@@ -31,7 +31,7 @@ Feature:
     Then The status code is 201
     Then The data is json
     Then The json data have 'filename'
-    And I send a 'POST' to '/astronauts/' with json data and temporary astronaut avatar
+    And I send a 'POST' to '/astronauts' with json data and temporary astronaut avatar
 """
 {
   "username": "new-astronaut",
@@ -49,7 +49,7 @@ Feature:
     Then The json data have 'avatar' = 'http://cdn.workshop-ci.local/astronauts/new-astronaut/avatar.png'
 
   Scenario: Call astronaut route to create new astronaut whit bad request
-    When I send a 'POST' to '/astronauts/' with json data
+    When I send a 'POST' to '/astronauts' with json data
 """
 {
   "username": "test",
@@ -78,7 +78,7 @@ Feature:
 """
 
   Scenario: Call astronaut route to create new astronaut whit bad temporary astronaut avatar
-    When I send a 'POST' to '/astronauts/' with json data
+    When I send a 'POST' to '/astronauts' with json data
 """
 {
   "username": "new-astronaut_2",
@@ -97,7 +97,7 @@ Feature:
 """
 
   Scenario: Call astronauts route
-    When I send a 'GET' request to '/astronauts/'
+    When I send a 'GET' request to '/astronauts'
     Then The status code is 200
     Then The data is json
     Then The json data have 6 items

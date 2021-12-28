@@ -39,7 +39,7 @@ final class AstronautController
         }
     }
 
-    #[Route(path: '/', name: 'post', methods: ['POST'])]
+    #[Route(path: '', name: 'post', methods: ['POST'])]
     public function post(Request $request): JsonResponse
     {
         try {

@@ -90,6 +90,18 @@ final class AstronautAvatarHandler
         return true;
     }
 
+    public function deleteTemporary(string $filePath): bool
+    {
+        if (false === $this->tmpStorage->fileExists($filePath)) {
+            throw new NoTemporaryAstronautAvatarFileException($filePath);
+        }
+
+        // phpcs:disable PHPCS_SecurityAudit.BadFunctions.FilesystemFunctions.WarnFilesystem
+        $this->tmpStorage->delete($filePath);
+
+        return true;
+    }
+
     /**
      * @throws FilesystemException
      */

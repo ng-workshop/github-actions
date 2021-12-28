@@ -120,6 +120,32 @@ final class AstronautAvatarHandlerTest extends KernelTestCase
         $this->assertTrue($this->cdnStorage->fileExists('astronauts/wilson/avatar.png'));
     }
 
+    public function testDeleteTemporaryWhen(): void
+    {
+        // phpcs:disable PHPCS_SecurityAudit.BadFunctions.FilesystemFunctions.WarnFilesystem
+        $data = file_get_contents(\dirname(__DIR__) . '/../Resources/test.png');
+
+        // phpcs:disable PHPCS_SecurityAudit.BadFunctions.CryptoFunctions.WarnCryptoFunc
+        // @phpstan-ignore-next-line
+        $this->tmpStorage->write('astronaut_avatar_tmp.png', base64_encode($data));
+
+        $this->assertCount(1, $this->tmpStorage->listContents(''));
+        $this->assertTrue($this->tmpStorage->fileExists('astronaut_avatar_tmp.png'));
+
+        $this->astronautAvatarHandler->deleteTemporary('astronaut_avatar_tmp.png');
+
+        $this->assertCount(0, $this->tmpStorage->listContents(''));
+        $this->assertFalse($this->tmpStorage->fileExists('astronaut_avatar_tmp.png'));
+    }
+
+    public function testDeleteTemporaryWhenNotExist(): void
+    {
+        $this->expectException(NoTemporaryAstronautAvatarFileException::class);
+        $this->expectExceptionMessage('There is no temporary file with the name "astronaut_avatar_bad-file.png"');
+
+        $this->astronautAvatarHandler->deleteTemporary('astronaut_avatar_bad-file.png');
+    }
+
     public function testDeleteWhenAstronautAvatarIsProtected(): void
     {
         // phpcs:disable PHPCS_SecurityAudit.BadFunctions.FilesystemFunctions.WarnFilesystem

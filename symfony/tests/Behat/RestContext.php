@@ -16,6 +16,7 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class RestContext implements Context
 {
+    private string $cacheFilePath;
     private HttpClientInterface $client;
     private ?ResponseInterface $response = null;
 
@@ -24,6 +25,8 @@ class RestContext implements Context
 
     public function __construct(string $baseUri)
     {
+        // phpcs:disable PHPCS_SecurityAudit.BadFunctions.FilesystemFunctions.WarnFilesystem
+        $this->cacheFilePath = \dirname(__DIR__) . '/../var/cache/.behat-cache';
         $this->client = HttpClient::createForBaseUri($baseUri);
     }
 
@@ -55,6 +58,20 @@ class RestContext implements Context
             throw new \InvalidArgumentException(sprintf('JSON not well formed: %s', $jsonException->getMessage()));
         } catch (TransportExceptionInterface $transportException) { // @SuppressWarnings(PHPMD.EmptyCatchBlock)
         }
+    }
+
+    #[When('I send a :method to :path replacing the values in path with the last cached json response')]
+    public function iSendRequestReplacingTheValuesInPathWithTheLastCachedJsonResponse(
+        string $method,
+        string $path
+    ): void {
+        foreach ($this->getCache() as $key => $value) {
+            $path = str_replace(sprintf('{%s}', $key), $value, $path);
+        }
+
+        $this->clearCache();
+
+        $this->iSendRequest($method, $path);
     }
 
     #[when('I send a :method to :path with json data and temporary astronaut avatar')]
@@ -240,6 +257,35 @@ class RestContext implements Context
                     count($this->data),
                 ),
             );
+        }
+    }
+
+    #[Then('Cache response')]
+    public function saveFilename(): void
+    {
+        $this->saveCache($this->data);
+    }
+
+    /**
+     * @param array<mixed, mixed> $data
+     */
+    private function saveCache(array $data): void
+    {
+        file_put_contents($this->cacheFilePath, serialize($data));
+    }
+
+    /**
+     * @return array<mixed, mixed>
+     */
+    private function getCache(): array
+    {
+        return unserialize((string) file_get_contents($this->cacheFilePath));
+    }
+
+    private function clearCache(): void
+    {
+        if (file_exists($this->cacheFilePath)) {
+            unlink($this->cacheFilePath);
         }
     }
 }
