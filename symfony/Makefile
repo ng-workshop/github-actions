@@ -65,7 +65,7 @@ ifneq ($(APP_ENV), prod)
 endif
 
 phpmd: var/reports
-	@php -d error_reporting='E_ALL & ~E_NOTICE & ~E_DEPRECATED' ./vendor/bin/phpmd $(PHPMD_ARGS)
+	@php ./vendor/bin/phpmd $(PHPMD_ARGS)
 
 phpcs: var/reports
 	@php ./vendor/bin/phpcs

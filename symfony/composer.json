@@ -41,6 +41,7 @@
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "friends-of-behat/symfony-extension": "^2.2",
         "jangregor/phpstan-prophecy": "^1.0",
+        "pdepend/pdepend": "2.x-dev",
         "pheromone/phpcs-security-audit": "^2.0",
         "phpmd/phpmd": "^2.11",
         "phpspec/prophecy-phpunit": "^2.0",
