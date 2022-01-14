@@ -10,7 +10,6 @@ use App\Handler\AstronautAvatarHandler;
 use App\Handler\AstronautHandler;
 use App\Repository\AstronautRepository;
 use App\Validator\AstronautValidator;
-use App\Validator\Constraints\AstronautConstraints;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
@@ -34,7 +33,8 @@ final class AstronautHandlerTest extends TestCase
 
         $this->astronautHandler = new AstronautHandler(
             new AstronautValidator(
-                new AstronautConstraints(['planet-1' => ['name' => 'planet 1'], 'planet-2' => ['name' => 'planet 2']])
+                ['planet-1' => ['name' => 'planet 1'], 'planet-2' => ['name' => 'planet 2']],
+                $this->astronautRepository->reveal()
             ),
             $this->astronautRepository->reveal(),
             $this->entityManager->reveal(),
@@ -160,6 +160,16 @@ final class AstronautHandlerTest extends TestCase
             'avatar' => 'https://avatar.eleven-labs.com/rocket-raccoon',
         ];
 
+        // @phpstan-ignore-next-line
+        $this->astronautRepository
+            ->findOneBy(['username' => 'rocket raccoons'])
+            ->willReturn(null)
+            ->shouldBeCalledTimes(1);
+        // @phpstan-ignore-next-line
+        $this->astronautRepository
+            ->findOneBy(['email' => 'rocket-raccoon@eleven-labs.com'])
+            ->willReturn(null)
+            ->shouldBeCalledTimes(1);
         // @phpstan-ignore-next-line
         $this->astronautRepository->find(1)->willReturn($astronaut)->shouldBeCalledTimes(1);
         // @phpstan-ignore-next-line

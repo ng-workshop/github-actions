@@ -31,14 +31,17 @@ define HELP
 $(BLUE)make [TARGET]$(RESET)
 
 $(BLUE)Target:$(RESET)
-	$(GREEN)install$(RESET)					$(YELLOW)description$(RESET)
-	$(GREEN)setup-database$(RESET)				$(YELLOW)description$(RESET)
-	$(GREEN)phpmd$(RESET)					$(YELLOW)description$(RESET)
-	$(GREEN)phpcs$(RESET)					$(YELLOW)description$(RESET)
-	$(GREEN)phpstan$(RESET)					$(YELLOW)description$(RESET)
-	$(GREEN)phpcs-security-audit$(RESET)			$(YELLOW)description$(RESET)
-	$(GREEN)phpunit$(RESET)					$(YELLOW)description$(RESET)
-	$(GREEN)behat$(RESET)					$(YELLOW)description$(RESET)
+	$(GREEN)help$(RESET)					$(YELLOW)Show make help$(RESET)
+	$(GREEN)install$(RESET)					$(YELLOW)Dependencies installation and database configuratio$(RESET)
+	$(GREEN)setup-database$(RESET)				$(YELLOW)On the prod environment, there is only the migration of the database, otherwise we create a database, we delete the schema, we migrate the database and we load fixtures.$(RESET)
+	$(GREEN)phpmd$(RESET)					$(YELLOW)Running PHPMD$(RESET)
+	$(GREEN)phpcs$(RESET)					$(YELLOW)Running PHPCS$(RESET)
+	$(GREEN)phpstan$(RESET)					$(YELLOW)Running PHPStan$(RESET)
+	$(GREEN)phpcs-security-audit$(RESET)			$(YELLOW)Running PHPCS Security Audit$(RESET)
+	$(GREEN)phpunit$(RESET)					$(YELLOW)Running PHPUnit$(RESET)
+	$(GREEN)behat$(RESET)					$(YELLOW)Running Behat$(RESET)
+	$(GREEN)var/reports$(RESET)				$(YELLOW)Creation of the var/reports directory$(RESET)
+	$(GREEN)show-upgradable-dependencies$(RESET)		$(YELLOW)List of dependencies that can be updated$(RESET)
 $(RESET)
 endef
 export HELP
@@ -87,3 +90,6 @@ tests: phpunit behat
 
 var/reports:
 	@mkdir -p $@
+
+show-upgradable-dependencies:
+	@composer outdated

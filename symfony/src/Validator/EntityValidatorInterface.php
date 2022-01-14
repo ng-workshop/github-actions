@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Validator\Constraints;
+namespace App\Validator;
 
 use Symfony\Component\Validator\Constraint;
 
-interface ConstraintsInterface
+interface EntityValidatorInterface
 {
     public function getConstraints(bool $partial): Constraint;
 }

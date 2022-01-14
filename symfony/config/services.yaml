@@ -21,11 +21,3 @@ services:
         resource: '%kernel.project_dir%/src/Controller/'
         tags:
             - controller.service_arguments
-
-    App\Validator\AstronautValidator:
-        arguments:
-            $constraints: '@App\Validator\Constraints\AstronautConstraints'
-
-    App\Validator\AstronautAvatarValidator:
-        arguments:
-            $constraints: '@App\Validator\Constraints\AstronautAvatarConstraints'

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Units\Utils;
 
 use App\Exception\InvalidBase64EncodedFile;
-use App\Utils\Base64ExtensionGetter;
+use App\Util\Base64ExtensionGetter;
 use PHPUnit\Framework\TestCase;
 
 final class Base64ExtensionGetterTest extends TestCase

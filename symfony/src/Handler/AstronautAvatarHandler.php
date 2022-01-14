@@ -12,7 +12,7 @@ use App\Exception\ViolationException;
 use App\Generator\AvatarPathGenerator;
 use App\Specification\IsProtectedAstronautAvatarSpecification;
 use App\Specification\IsTemporaryAstronautAvatarSpecification;
-use App\Utils\Base64ExtensionGetter;
+use App\Util\Base64ExtensionGetter;
 use App\Validator\AstronautAvatarValidator;
 use League\Flysystem\FilesystemException;
 use League\Flysystem\FilesystemOperator;
@@ -68,6 +68,7 @@ final class AstronautAvatarHandler
     /**
      * @throws GenerateAvatarPathException
      * @throws FilesystemException
+     * @throws NoTemporaryAstronautAvatarFileException
      */
     public function update(Astronaut $astronaut): bool
     {
@@ -90,6 +91,10 @@ final class AstronautAvatarHandler
         return true;
     }
 
+    /**
+     * @throws NoTemporaryAstronautAvatarFileException
+     * @throws FilesystemException
+     */
     public function deleteTemporary(string $filePath): bool
     {
         if (false === $this->tmpStorage->fileExists($filePath)) {
