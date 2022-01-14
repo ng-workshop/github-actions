@@ -12,6 +12,7 @@ use App\Repository\AstronautRepository;
 use App\Validator\AstronautValidator;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Flysystem\FilesystemException;
+use League\Flysystem\FilesystemOperator;
 
 final class AstronautHandler
 {
@@ -20,6 +21,8 @@ final class AstronautHandler
         private AstronautRepository $astronautRepository,
         private EntityManagerInterface $entityManager,
         private AstronautAvatarHandler $astronautAvatarHandler,
+        private FilesystemOperator $cdnStorage,
+        private string $astronautsStorageDir,
     ) {
     }
 
@@ -107,7 +110,7 @@ final class AstronautHandler
         $astronaut = $this->read($id);
         $this->entityManager->remove($astronaut);
         $this->entityManager->flush();
-        $this->astronautAvatarHandler->delete($astronaut);
+        $this->cdnStorage->deleteDirectory(sprintf('%s/%s', $this->astronautsStorageDir, $astronaut->username));
 
         return $astronaut;
     }

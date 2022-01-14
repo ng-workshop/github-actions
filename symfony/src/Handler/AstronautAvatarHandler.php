@@ -16,6 +16,7 @@ use App\Util\Base64ExtensionGetter;
 use App\Validator\AstronautAvatarValidator;
 use League\Flysystem\FilesystemException;
 use League\Flysystem\FilesystemOperator;
+use League\Flysystem\Visibility;
 use Symfony\Component\HttpFoundation\File\File;
 
 final class AstronautAvatarHandler
@@ -27,7 +28,8 @@ final class AstronautAvatarHandler
         private FilesystemOperator $cdnStorage,
         private AstronautAvatarValidator $astronautAvatarValidator,
         private IsProtectedAstronautAvatarSpecification $isProtectedAstronautAvatarSpecification,
-        private IsTemporaryAstronautAvatarSpecification $isTemporaryAstronautAvatarSpecification
+        private IsTemporaryAstronautAvatarSpecification $isTemporaryAstronautAvatarSpecification,
+        private string $astronautsStorageDir,
     ) {
     }
 
@@ -82,7 +84,19 @@ final class AstronautAvatarHandler
         $tmpFilePath = $this->avatarPathGenerator->generate(fileName: $astronaut->avatar);
         $avatarPath = $this->avatarPathGenerator->generate(file: new File($tmpFilePath, true), astronaut: $astronaut);
 
-        $this->cdnStorage->writeStream($avatarPath, $this->tmpStorage->readStream($astronaut->avatar));
+        $directory = explode('/', $avatarPath);
+        array_pop($directory);
+
+        $this->cdnStorage->createDirectory(
+            sprintf('%s/%s', $this->astronautsStorageDir, $astronaut->username),
+            ['visibility' => Visibility::PUBLIC]
+        );
+
+        $this->cdnStorage->writeStream(
+            $avatarPath,
+            $this->tmpStorage->readStream($astronaut->avatar),
+            ['visibility' => Visibility::PUBLIC]
+        );
         // phpcs:disable PHPCS_SecurityAudit.BadFunctions.FilesystemFunctions.WarnFilesystem
         $this->tmpStorage->delete($astronaut->avatar);
 

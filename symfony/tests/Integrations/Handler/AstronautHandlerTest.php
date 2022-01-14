@@ -11,6 +11,7 @@ use App\Handler\AstronautHandler;
 use App\Repository\AstronautRepository;
 use App\Validator\AstronautValidator;
 use Doctrine\ORM\EntityManagerInterface;
+use League\Flysystem\FilesystemOperator;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Prophecy\PhpUnit\ProphecyTrait;
@@ -23,6 +24,7 @@ final class AstronautHandlerTest extends TestCase
     private AstronautRepository|ObjectProphecy $astronautRepository;
     private EntityManagerInterface|ObjectProphecy $entityManager;
     private AstronautAvatarHandler|ObjectProphecy $astronautAvatarHandler;
+    private FilesystemOperator|ObjectProphecy $cdnStorage;
     private AstronautHandler $astronautHandler;
 
     protected function setUp(): void
@@ -30,6 +32,7 @@ final class AstronautHandlerTest extends TestCase
         $this->astronautRepository = $this->prophesize(AstronautRepository::class);
         $this->entityManager = $this->prophesize(EntityManagerInterface::class);
         $this->astronautAvatarHandler = $this->prophesize(AstronautAvatarHandler::class);
+        $this->cdnStorage = $this->prophesize(FilesystemOperator::class);
 
         $this->astronautHandler = new AstronautHandler(
             new AstronautValidator(
@@ -39,6 +42,8 @@ final class AstronautHandlerTest extends TestCase
             $this->astronautRepository->reveal(),
             $this->entityManager->reveal(),
             $this->astronautAvatarHandler->reveal(),
+            $this->cdnStorage->reveal(),
+            'astronauts'
         );
     }
 
@@ -204,12 +209,8 @@ final class AstronautHandlerTest extends TestCase
         $this->entityManager->remove($astronaut)->willReturn(null)->shouldBeCalledTimes(1);
         // @phpstan-ignore-next-line
         $this->entityManager->flush()->willReturn(null)->shouldBeCalledTimes(1);
-        // phpcs:disable PHPCS_SecurityAudit.BadFunctions.FilesystemFunctions.WarnFilesystem
         // @phpstan-ignore-next-line
-        $this->astronautAvatarHandler
-            ->delete($astronaut)
-            ->willReturn(true)
-            ->shouldBeCalledTimes(1);
+        $this->cdnStorage->deleteDirectory('astronauts/wilson')->shouldBeCalledTimes(1);
 
         $this->astronautHandler->delete(1);
     }
