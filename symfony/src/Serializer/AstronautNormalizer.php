@@ -23,12 +23,8 @@ final class AstronautNormalizer implements ContextAwareNormalizerInterface
     {
         $data = (array) $object;
 
-        if (!is_array($data) || !array_key_exists('avatar', $data)) {
-            throw new \InvalidArgumentException('The property avatar is require in Astronaut class.');
-        }
-
         $data['avatar'] = sprintf('%s/%s', $this->cdnUrl, $data['avatar']);
-        $data['planet'] = $this->planets[$data['planet']]['name'];
+        $data['formattedPlanetName'] = $this->planets[$data['planet']]['name'];
 
         return $data;
     }

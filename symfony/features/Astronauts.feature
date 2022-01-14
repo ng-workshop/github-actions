@@ -16,7 +16,8 @@ Feature:
     Then The status code is 200
     Then The data is json
     Then The json data have 'username' = 'rocket raccoon'
-    Then The json data have 'planet' = 'Raccoons of asgard'
+    Then The json data have 'planet' = 'raccoons-of-asgard'
+    Then The json data have 'formattedPlanetName' = 'Raccoons of asgard'
     Then The json data have 'email' = 'rocket-raccoon@eleven-labs.com'
     Then The json data have 'avatar' = 'http://cdn.workshop-ci.local/planets/raccoons-of-asgard.png'
 
@@ -135,7 +136,8 @@ Feature:
     Then The status code is 200
     Then The json data have 'id' = 6
     Then The json data have 'username' = 'new-raccoon'
-    Then The json data have 'planet' = 'Raccoons of asgard'
+    Then The json data have 'planet' = 'raccoons-of-asgard'
+    Then The json data have 'formattedPlanetName' = 'Raccoons of asgard'
     Then The json data have 'email' = 'new-raccoon@eleven-labs.com'
     Then The json data have 'avatar' = 'http://cdn.workshop-ci.local/astronauts/new-raccoon/avatar.png'
 
@@ -144,7 +146,8 @@ Feature:
     Then The status code is 200
     Then The data is json
     Then The json data have 'username' = 'new-raccoon'
-    Then The json data have 'planet' = 'Raccoons of asgard'
+    Then The json data have 'planet' = 'raccoons-of-asgard'
+    Then The json data have 'formattedPlanetName' = 'Raccoons of asgard'
     Then The json data have 'email' = 'new-raccoon@eleven-labs.com'
     Then The json data have 'avatar' = 'http://cdn.workshop-ci.local/astronauts/new-raccoon/avatar.png'
 

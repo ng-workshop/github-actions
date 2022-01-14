@@ -31,29 +31,16 @@ final class AstronautNormalizerTest extends TestCase
 
         $normalizedAstronaut = $this->astronautNormalizer->normalize($astronaut);
 
-        $this->assertCount(6, $normalizedAstronaut);
+        $this->assertCount(7, $normalizedAstronaut);
         $this->assertEquals('test', $normalizedAstronaut['username']);
-        $this->assertEquals('planet 1', $normalizedAstronaut['planet']);
+        $this->assertEquals('planet-1', $normalizedAstronaut['planet']);
+        $this->assertEquals('planet 1', $normalizedAstronaut['formattedPlanetName']);
         $this->assertEquals('test@test.com', $normalizedAstronaut['email']);
         $this->assertEquals('http://cdn.test/test-1.png', $normalizedAstronaut['avatar']);
         // @phpstan-ignore-next-line
         $this->assertInstanceOf(\DateTimeImmutable::class, $normalizedAstronaut['createdAt']);
         // @phpstan-ignore-next-line
         $this->assertInstanceOf(\DateTime::class, $normalizedAstronaut['updatedAt']);
-    }
-
-    public function testThrowExceptionNormalize(): void
-    {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('The property avatar is require in Astronaut class.');
-
-        $astronaut = new Astronaut([
-            'username' => 'test',
-            'planet' => 'planet-1',
-            'email' => 'test@test.com',
-        ]);
-
-        $this->astronautNormalizer->normalize($astronaut);
     }
 
     /**
