@@ -15,9 +15,9 @@ flysystem:
             port: '%env(int:FTP_PORT)%'
             root: '%env(FTP_ROOT_DIR)%'
             privateKey: '%env(FTP_PRIVATE_KEY)%'
-            directoryPerm: 0766
-            permPublic: 0755
-            permPrivate: 0766
+            directoryPerm: '0766'
+            permPublic: '0755'
+            permPrivate: '0766'
             timeout: 10
         tmp.storage:
           adapter: 'local'
