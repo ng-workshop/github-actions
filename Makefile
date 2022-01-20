@@ -22,10 +22,13 @@ ftp:
 	@docker-compose exec ftp sh
 
 postgres:
-	@docker-compose exec postgres psql
+	@docker-compose exec postgres psql --username=$(POSTGRES_USER) --dbname=$(POSTGRES_DB)
 
 symfony:
 	@docker-compose exec symfony sh
 
 vuejs:
 	@docker-compose exec vuejs bash
+
+
+.PHONY: symfony vuejs
