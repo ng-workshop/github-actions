@@ -1,0 +1,27 @@
+import { mount } from '@vue/test-utils'
+
+import NavBarItem from '@/components/NavBar/Item'
+import Link from '@/props/link'
+
+describe('test "NavBarItem" component', () => {
+    const link = new Link({ title: 'route 1', name: 'route-1' })
+    console.log(link)
+
+    test('test render "NavBarItem" component if is active route', () => {
+        // const wrapper = mount(NavBarItem, {
+        //     mocks: { $route: { name: 'route-1 '} },
+        //     props: { link }
+        // })
+        //
+        // console.log(wrapper)
+    })
+
+    test('test item nav when route is updated', async () => {
+        // const wrapper = mount(NavBarItem, {
+        //     mocks: { $route: { name: 'route-2 '} },
+        //     props: { link }
+        // })
+        //
+        // console.log(wrapper)
+    })
+})
