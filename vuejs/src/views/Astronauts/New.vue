@@ -16,7 +16,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import AstronautsForm from '@/components/Astronauts/Form'
-import Loader from '@/components/Loader'
+import Loader from '@/components/Common/Loader'
 
 export default {
   name: 'ViewAstronautsNew',

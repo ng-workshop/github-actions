@@ -1,10 +1,13 @@
 import { routes as routesFromRouter } from '@/router'
 import Link from '@/props/link'
 
-const navLinks = []
+const navLinks = {}
 
-export const getLinksInNav = () => navLinks.length !== 0 ? navLinks : getLinksInNavByRoutes(routesFromRouter)
-export const isLinkNav = route => 'meta' in route && 'inNav' in route.meta && route.meta.inNav === true
+export const getLinksInNav = () => Object.values(navLinks).length !== 0
+    ? Object.values(navLinks)
+    : Object.values(getLinksInNavByRoutes(routesFromRouter))
+
+export const isLinkNav = route => 'meta' in route && 'nav' in route.meta && route.meta.nav.display === true
 
 export const getLinksInNavByRoutes = routes => {
     for (const route of routes) {
@@ -14,8 +17,8 @@ export const getLinksInNavByRoutes = routes => {
             continue;
         }
 
-        if (isLinkNav(route) && !navLinks.includes(route)) {
-            navLinks.push(routeToLink(route))
+        if (isLinkNav(route) && navLinks[route.meta.nav.position] === undefined) {
+            navLinks[route.meta.nav.position] = routeToLink(route)
         }
     }
 
@@ -23,10 +26,8 @@ export const getLinksInNavByRoutes = routes => {
 }
 
 export const routeToLink = (route) => Link.fromRoute(route)
-export const createLink = data => new Link(data)
 
 export const getRouteByName = (name, routes = routesFromRouter) => {
-
     for (const route of routes) {
         if (route.name === name) {
             return route
@@ -41,5 +42,3 @@ export const getRouteByName = (name, routes = routesFromRouter) => {
         }
     }
 }
-
-export default { getLinksInNav, isLinkNav, getLinksInNavByRoutes, routeToLink, createLink }

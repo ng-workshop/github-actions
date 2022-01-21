@@ -1,73 +1,67 @@
 import astronautClient from '@/api/astronauts'
 
-export default {
-    state: {
-        item: {
-            id: null,
-            username: null,
-            planet: null,
-            formattedPlanetName: null,
-            email: null,
-            avatar: null,
-            createdAt: null,
-            updatedAt: null,
-        },
-        loading: false,
-        errors: null,
-    },
-    mutations: {
-        SAVE: (state, astronaut) => state.item = astronaut,
-        ON_LOAD: state => state.loading = true,
-        LOADED: state => state.loading = false,
-        SAVE_ERRORS: (state, errors) => state.errors = errors,
-        CLEAR: state => Object.assign(state, {
-            item: {
-                id: null,
-                username: null,
-                planet: null,
-                formattedPlanetName: null,
-                email: null,
-                avatar: null,
-                createdAt: null,
-                updatedAt: null,
-            },
-            loading: false,
-            errors: null,
-        }),
-    },
-    actions: {
-        LOAD: async ({ commit, state }, id) => {
-            if (state.item.id === id) {
-                return
-            }
+export const state = {
+    id: null,
+    username: null,
+    planet: null,
+    formattedPlanetName: null,
+    email: null,
+    avatar: null,
+    createdAt: null,
+    updatedAt: null,
+}
 
-            commit('ON_LOAD')
+export const mutations = {
+    SAVE: (state, astronaut) => Object.assign({}, state, astronaut),
+    CLEAR: state => Object.assign(state, {
+        id: null,
+        username: null,
+        planet: null,
+        formattedPlanetName: null,
+        email: null,
+        avatar: null,
+        createdAt: null,
+        updatedAt: null,
+    }),
+}
 
-            try {
-                commit('SAVE', await astronautClient.get(id))
-            } catch (error) {
-                commit('SAVE_ERRORS', error.data)
-            }
-
-            commit('LOADED')
-        },
-        SAVE: async({ commit }, astronaut) => {
-            commit('ON_LOAD')
-
-            try {
-                commit('SAVE', await astronautClient.post(astronaut))
-            } catch (error) {
-                commit('SAVE_ERRORS', error.data)
-            }
-
-            commit('LOADED')
+export const actions = {
+    LOAD: async ({ commit, state, dispatch }, id) => {
+        if (state.item.id === id) {
+            return
         }
+
+        dispatch('loader/ON_LOAD', null, { root: true })
+
+        try {
+            commit('SAVE', await astronautClient.get(id))
+        } catch (error) {
+            dispatch('error/ADD', error.data, { root: true })
+        }
+
+        dispatch('loader/IS_LOADED', null, { root: true })
     },
-    getters: {
-        GET: state => state.item,
-        IS_LOADING: state => state.loading,
-        HAS_ERRORS: state => null !== state.errors,
-        GET_ERRORS: state => state.errors,
-    },
+    SAVE: async({ commit, dispatch }, astronaut) => {
+        dispatch('loader/ON_LOAD', null, { root: true })
+
+        try {
+            commit('SAVE', await astronautClient.post(astronaut))
+        } catch (error) {
+            dispatch('error/ADD', error.data, { root: true })
+        }
+
+        dispatch('loader/IS_LOADED', null, { root: true })
+    }
+}
+
+export const getters = {
+    GET: state => state.item,
+}
+
+export default {
+    state,
+    mutations,
+    actions,
+    getters,
     namespaced: true
 }

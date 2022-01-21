@@ -9,7 +9,10 @@ export default {
             component: () => import(/* webpackChunkName: "astronaut" */ '@/views/Astronauts/Delete.vue'),
             meta: {
                 title: 'astronaut delete',
-                inNav: false,
+                nav: {
+                    display: false,
+                    position: null,
+                },
             },
         },
         {
@@ -18,7 +21,10 @@ export default {
             component: () => import(/* webpackChunkName: "astronaut" */ '@/views/Astronauts/Edit.vue'),
             meta: {
                 title: 'astronaut delete',
-                inNav: false,
+                nav: {
+                    display: false,
+                    position: null,
+                },
             },
         },
         {
@@ -27,7 +33,10 @@ export default {
             component: () => import(/* webpackChunkName: "astronauts" */ '@/views/Astronauts/List.vue'),
             meta: {
                 title: 'astronaut list',
-                inNav: true,
+                nav: {
+                    display: true,
+                    position: 100,
+                },
             },
         },
         {
@@ -36,7 +45,10 @@ export default {
             component: () => import(/* webpackChunkName: "astronaut" */ '@/views/Astronauts/New.vue'),
             meta: {
                 title: 'astronaut delete',
-                inNav: false,
+                nav: {
+                    display: false,
+                    position: null,
+                },
             },
         },
         {
@@ -45,7 +57,10 @@ export default {
             component: () => import(/* webpackChunkName: "astronaut" */ '@/views/Astronauts/Show.vue'),
             meta: {
                 title: 'astronaut delete',
-                inNav: false,
+                nav: {
+                    display: false,
+                    position: null,
+                },
             },
         }
     ],

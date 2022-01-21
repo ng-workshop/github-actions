@@ -7,14 +7,16 @@
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "test:integration": "echo test:integration",
-    "test:e2e": "vue-cli-service test:e2e --headless",
+    "test:e2e": "NODE_ENV=test vue-cli-service test:e2e --headless",
     "lint": "vue-cli-service lint",
-    "cypress:install": "cypress install"
+    "cypress:install": "cypress install",
+    "api:mock": "json-server --watch tests/e2e/db.json"
   },
   "dependencies": {
     "axios": "^0.24.0",
     "bootstrap-vue": "^2.1.0",
     "core-js": "^3.6.5",
+    "sass": "^1.49.0",
     "vee-validate": "^3.4.14",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
@@ -22,6 +24,7 @@
   },
   "devDependencies": {
     "@babel/polyfill": "^7.7.0",
+    "@cypress/code-coverage": "^3.9.12",
     "@testing-library/vue": "^5.8.2",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-e2e-cypress": "~4.5.0",
@@ -32,6 +35,7 @@
     "@vue/cli-service": "~4.5.0",
     "@vue/test-utils": "^1.3.0",
     "babel-eslint": "^10.1.0",
+    "babel-plugin-istanbul": "^6.1.1",
     "bootstrap": "^4.3.1",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
@@ -39,8 +43,7 @@
     "node-sass": "^7.0.1",
     "popper.js": "^1.16.0",
     "portal-vue": "^2.1.6",
-    "sass": "^1.19.0",
-    "sass-loader": "^12.4.0",
+    "sass-loader": "^10",
     "vue-cli-plugin-bootstrap": "~0.4.0",
     "vue-template-compiler": "^2.6.11"
   },

@@ -33,5 +33,3 @@ export const getImageMetadata = async file => {
 export const getAuthorizedImageFormat = () => {
     return [IMAGE_FORMAT_LANDSCAPE, IMAGE_FORMAT_PORTRAIT, IMAGE_FORMAT_SQUARE]
 }
-
-export default { getImageFormat, fileToBase64, getImageMetadata, getAuthorizedImageFormat }

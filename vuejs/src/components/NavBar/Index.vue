@@ -1,5 +1,4 @@
 <template>
-  <div>
     <b-navbar toggleable="lg" type="dark" variant="dark">
       <b-navbar-brand :to="links[0].to">{{ title }}</b-navbar-brand>
 
@@ -11,7 +10,6 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
-  </div>
 </template>
 
 <script>

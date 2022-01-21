@@ -1,5 +1,5 @@
 <template>
-  <b-nav-item :to="link.to" :active-class="activeClass">
+  <b-nav-item :to="link.to" :active="isActive" :class="`nav-link-${link.name}`">
     {{ link.title | capitalize }}
   </b-nav-item>
 </template>
@@ -15,13 +15,10 @@ export default {
       require: true,
     }
   },
-  data() {
-    return {
-      activeClass: '',
+  computed: {
+    isActive() {
+      return this.link.name === this.$route.name
     }
-  },
-  computed() {
-    this.activeClass = this.link.name === this.$route.name ? 'active' : ''
   },
 }
 </script>

@@ -32,5 +32,3 @@ export const getPlanetSelectOptions = () => {
 
     return options
 }
-
-export default { getPlanetIds, getPlanetNames, getPlanetSelectOptions }

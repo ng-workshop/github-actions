@@ -4,7 +4,8 @@ import { getRouteByName } from '@/utils/router'
 export default class {
     constructor({
         id = null,
-        username, planet,
+        username,
+        planet,
         formattedPlanetName,
         avatar,
         links,

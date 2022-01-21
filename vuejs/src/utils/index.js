@@ -1,6 +1,5 @@
-import file from '@/utils/file'
-import formatter from '@/utils/formatter'
-import planet from '@/utils/planet'
-import router from '@/utils/router'
+export * from '@/utils/file'
+export * from '@/utils/formatter'
+export * from '@/utils/planet'
+export * from '@/utils/router'
 
-export default { file, formatter, planet, router }

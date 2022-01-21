@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "username": "wilson",
+    "planet": "hq",
+    "email": "wilson@eleven-labs.com",
+    "avatar": "http:\/\/cdn.workshop-ci.local\/planets\/hq.png",
+    "createdAt": {
+      "date": "2022-01-01 00:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "UTC"
+    },
+    "updatedAt": {
+      "date": "2022-01-01 01:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "UTC"
+    },
+    "formattedPlanetName": "hq"
+  },
+  {
+    "id": 2,
+    "username": "rocket raccoon",
+    "planet": "raccoons-of-asgard",
+    "email": "rocket-raccoon@eleven-labs.com",
+    "avatar": "http:\/\/cdn.workshop-ci.local\/planets\/raccoons-of-asgard.png",
+    "createdAt": {
+      "date": "2022-01-01 08:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "UTC"
+    },
+    "updatedAt": {
+      "date": "2022-01-01 09:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "UTC"
+    },
+    "formattedPlanetName": "Raccoons of asgard"
+  },
+  {
+    "id": 3,
+    "username": "daffy duck",
+    "planet": "duck-invaders",
+    "email": "daffy-duck@eleven-labs.com",
+    "avatar": "http:\/\/cdn.workshop-ci.local\/planets\/duck-invaders.png",
+    "createdAt": {
+      "date": "2022-01-01 12:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "UTC"
+    },
+    "updatedAt": {
+      "date": "2022-01-01 13:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "UTC"
+    },
+    "formattedPlanetName": "Duck invaders"
+  },
+  {
+    "id": 4,
+    "username": "po ping",
+    "planet": "donut-factory",
+    "email": "po-ping@eleven-labs.com",
+    "avatar": "http:\/\/cdn.workshop-ci.local\/planets\/donut-factory.png",
+    "createdAt": {
+      "date": "2022-01-01 17:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "UTC"
+    },
+    "updatedAt": {
+      "date": "2022-01-01 18:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "UTC"
+    },
+    "formattedPlanetName": "Donut factory"
+  },
+  {
+    "id": 5,
+    "username": "chat potté",
+    "planet": "schizo-cats",
+    "email": "chat-potte@eleven-labs.com",
+    "avatar": "http:\/\/cdn.workshop-ci.local\/planets\/schizo-cats.png",
+    "createdAt": {
+      "date": "2022-01-01 22:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "UTC"
+    },
+    "updatedAt": {
+      "date": "2022-01-01 23:00:00.000000",
+      "timezone_type": 3,
+      "timezone": "UTC"
+    },
+    "formattedPlanetName": "Schizo cats"
+  }
+]

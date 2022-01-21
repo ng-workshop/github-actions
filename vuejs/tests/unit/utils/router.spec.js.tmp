@@ -1,0 +1,21 @@
+describe('Test "router" utils', () => {
+    describe('Test "getLinksInNav" function', () => {
+
+    })
+
+    describe('Test "isLinkNav" function', () => {
+
+    })
+
+    describe('Test "getLinksInNavByRoutes" function', () => {
+
+    })
+
+    describe('Test "routeToLink" function', () => {
+
+    })
+
+    describe('Test "getRouteByName" function', () => {
+
+    })
+})

@@ -2,7 +2,7 @@
   <div>
     <b-row align-h="end">
       <b-col cols="2">
-        <b-button :to="{ name: '' }" variant="primary">Create</b-button>
+        <b-button :to="{ name: 'astronaut-new' }" variant="primary" class="button-astronaut-new">Create</b-button>
       </b-col>
     </b-row>
 
@@ -18,7 +18,7 @@
 import { mapActions, mapGetters } from 'vuex'
 
 import AstronautsTable from '@/components/Astronauts/Table'
-import Loader from '@/components/Loader'
+import Loader from '@/components/Common/Loader'
 
 export default {
   name: 'ViewAstronautsList',
@@ -33,8 +33,7 @@ export default {
     ...mapGetters({
       getAstronauts: 'astronauts/GET',
       isLoading: 'loader/IS_LOADING',
-      hasErrors: 'astronauts/HAS_ERRORS',
-      getErrors: 'astronauts/GET_ERRORS',
+      hasErrors: 'error/HAS',
     }),
   },
   async created() {

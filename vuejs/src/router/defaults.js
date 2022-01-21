@@ -8,7 +8,10 @@ export default {
             component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
             meta: {
                 title: 'home',
-                inNav: true,
+                nav: {
+                    display: true,
+                    position: 0,
+                },
             }
         }
     ]

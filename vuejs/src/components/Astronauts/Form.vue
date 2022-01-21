@@ -138,8 +138,8 @@
 </template>
 
 <script>
-import AstronautType from '@/props/astronaut'
-import Loader from '@/components/Loader'
+import Astronaut from '@/props/astronaut'
+import Loader from '@/components/Common/Loader'
 
 export default {
   name: 'astronauts-form',
@@ -148,7 +148,7 @@ export default {
   },
   props: {
     astronaut: {
-      type: AstronautType,
+      type: Astronaut,
       required: true,
     },
     astronautAvatarPreview: {

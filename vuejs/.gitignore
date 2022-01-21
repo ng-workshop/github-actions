@@ -1,6 +1,9 @@
-/node_modules
-/dist
+/.nyc_output
 /coverage
+/dist
+/node_modules
+/tests/e2e/screenshots
+/tests/e2e/videos
 
 # local env files
 .env.local

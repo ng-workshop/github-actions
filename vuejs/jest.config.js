@@ -8,6 +8,7 @@ module.exports = {
     "!**/src/plugins/**",
     "!**/src/router/**",
     "!**/src/store/index.js",
+    "!**/src/views/**",
     "!**/src/main.js",
     "!**/tests/**",
     "!**/babel.config.js",

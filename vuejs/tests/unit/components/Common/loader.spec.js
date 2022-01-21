@@ -1,11 +1,13 @@
-import { mount } from '@vue/test-utils'
-import { localVue } from '../setup'
+import { shallowMount } from '@vue/test-utils'
+import { createLocalVue } from '../../helpers'
 
-import Loader from '@/components/Loader'
+import Loader from '@/components/Common/Loader'
 
 describe('test "Loader" component', () => {
     test('test render "Loader" component', () => {
-        const wrapper = mount(Loader, { localVue })
+        const wrapper = shallowMount(Loader, {
+            localVue: createLocalVue({ withBootstrap: true })
+        })
 
         expect(wrapper.find('strong').text()).toBe('Loading …')
 

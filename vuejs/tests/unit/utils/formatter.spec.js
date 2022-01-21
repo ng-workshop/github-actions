@@ -58,5 +58,9 @@ describe('test "formatter" package', () => {
         test('test to format a lowercase string to capitalize string', () => {
             expect(capitalize('capitalize')).toEqual('Capitalize')
         })
+
+        test('test to format a lowercase string to capitalize string with null value', () => {
+            expect(capitalize(null)).toEqual('')
+        })
     })
 })

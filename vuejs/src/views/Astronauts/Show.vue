@@ -10,7 +10,7 @@
 import {mapActions, mapGetters, mapMutations } from 'vuex';
 
 import AstronautsShow from '@/components/Astronauts/Show'
-import Loader from '@/components/Loader'
+import Loader from '@/components/Common/Loader'
 
 export default {
   name: 'ViewAstronautsShow',

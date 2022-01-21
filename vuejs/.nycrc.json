@@ -1,0 +1,10 @@
+{
+  "all": true,
+  "extension": [".js", ".vue"],
+  "include": ["src"],
+  "exclude": [
+    "src/api/**"
+  ],
+  "reporter": ["clover", "lcov", "text"],
+  "report-dir": "./coverage/cypress"
+}

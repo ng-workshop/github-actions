@@ -84,13 +84,13 @@
 </template>
 
 <script>
-import AstronautType from '@/props/astronaut';
+import Astronaut from '@/props/astronaut';
 
 export default {
   name: 'astronauts-show',
   props: {
     astronaut: {
-      type: AstronautType,
+      type: Astronaut,
       required: true
     }
   }

@@ -1,11 +1,19 @@
 import { mount } from '@vue/test-utils'
-import { router, localVue } from './setup'
+import { createRouter, createLocalVue } from './helpers'
 
 import App from '@/App'
 
 describe('test "App"', () => {
     test('test render "App"', () => {
-        const wrapper = mount(App, { router, localVue })
+        const localVue = createLocalVue({
+            withBootstrap: true,
+            withFilter: true,
+            withGlobalFunctions: true,
+            withRouter: true,
+        })
+        const router = createRouter()
+
+        const wrapper = mount(App, { localVue, router })
 
         expect(wrapper.findComponent({ name: 'nav-bar' }).exists()).toBeTruthy()
         expect(wrapper.find('#container').exists()).toBeTruthy()
