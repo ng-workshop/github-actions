@@ -22,6 +22,7 @@ module.exports = {
     "text"
   ],
   reporters: [
+    "default",
     ["jest-junit", { suiteName: "jest tests" }],
   ]
 }
