@@ -21,7 +21,7 @@ services:
         ipv4_address: 10.11.11.2
 
   symfony:
-    image: registry.gitlab.com/ng-workshops/ci/symfony:latest
+    image: registry.gitlab.com/ng-labs/workshop/gitlab-ci/symfony:latest
     build:
       context: ./docker/symfony
     depends_on:
@@ -41,7 +41,7 @@ services:
         ipv4_address: 10.11.11.3
 
   vuejs:
-    image: registry.gitlab.com/ng-workshops/ci/vuejs:latest
+    image: registry.gitlab.com/ng-labs/workshop/gitlab-ci/vuejs:latest
     build:
       context: ./docker/vuejs
     env_file:

@@ -1,4 +1,8 @@
 default:
+    formatters:
+        pretty: true
+        junit:
+            output_path: var/reports
     suites:
         default:
             contexts:

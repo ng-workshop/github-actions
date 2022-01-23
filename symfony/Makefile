@@ -84,7 +84,8 @@ phpunit: var/reports
 
 behat: var/reports ## Run this target with APP_ENV=test for use database test
 	@make --silent setup-database
-	@php ./vendor/bin/behat
+	@php -d display_errors=off ./vendor/bin/behat
+	@mv var/reports/default.xml var/reports/behat.xml
 
 .PHONY: tests
 tests: phpunit behat
