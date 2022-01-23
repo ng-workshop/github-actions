@@ -9,6 +9,7 @@
     "test:integration": "echo test:integration",
     "test:e2e": "NODE_ENV=test vue-cli-service test:e2e --headless",
     "lint": "vue-cli-service lint",
+    "lint:ci": "vue-cli-service lint --format junit > eslint-junit.xml",
     "cypress:install": "cypress install",
     "api:mock": "json-server --watch tests/e2e/db.json"
   },
@@ -38,6 +39,7 @@
     "babel-plugin-istanbul": "^6.1.1",
     "bootstrap": "^4.3.1",
     "eslint": "^6.7.2",
+    "eslint-junit": "^1.0.1",
     "eslint-plugin-vue": "^6.2.2",
     "mutationobserver-shim": "^0.3.3",
     "node-sass": "^7.0.1",
@@ -80,6 +82,12 @@
         }
       }
     ]
+  },
+  "eslint-junit": {
+    "suiteName": "eslint tests",
+    "output": "./eslint-junit.xml",
+    "classNameTemplate": "{ruleId}",
+    "titleTemplate": "{line} : {source}"
   },
   "browserslist": [
     "> 1%",

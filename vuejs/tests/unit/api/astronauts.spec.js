@@ -17,7 +17,7 @@ describe('test "astronautsClient" module', () => {
                     "username": "wilson",
                     "planet": "hq",
                     "email": "wilson@eleven-labs.com",
-                    "avatar": "http:\/\/cdn.workshop-ci.local\/planets\/hq.png",
+                    "avatar": "http://cdn.workshop-ci.local/planets/hq.png",
                     "createdAt": {
                         "date": "2022-01-16 14:30:30.000000",
                         "timezone_type": 3,
@@ -35,7 +35,7 @@ describe('test "astronautsClient" module', () => {
                     "username": "rocket raccoon",
                     "planet": "raccoons-of-asgard",
                     "email": "rocket-raccoon@eleven-labs.com",
-                    "avatar": "http:\/\/cdn.workshop-ci.local\/planets\/raccoons-of-asgard.png",
+                    "avatar": "http://cdn.workshop-ci.local/planets/raccoons-of-asgard.png",
                     "createdAt": {
                         "date": "2022-01-16 14:30:30.000000",
                         "timezone_type": 3,
@@ -78,7 +78,7 @@ describe('test "astronautsClient" module', () => {
                 "username": "wilson",
                 "planet": "hq",
                 "email": "wilson@eleven-labs.com",
-                "avatar": "http:\/\/cdn.workshop-ci.local\/planets\/hq.png",
+                "avatar": "http://cdn.workshop-ci.local/planets/hq.png",
                 "createdAt": {
                     "date": "2022-01-16 14:30:30.000000",
                     "timezone_type": 3,
@@ -129,7 +129,7 @@ describe('test "astronautsClient" module', () => {
                 "username": "new astronaut",
                 "planet": "hq",
                 "email": "new-astronaut@eleven-labs.com",
-                "avatar": "http:\/\/cdn.workshop-ci.local\/new-astronaut\/avatar.png",
+                "avatar": "http://cdn.workshop-ci.local/new-astronaut/avatar.png",
                 "createdAt": {
                     "date": "2022-01-16 14:30:30.000000",
                     "timezone_type": 3,
@@ -184,7 +184,7 @@ describe('test "astronautsClient" module', () => {
                 "username": "new astronaut name",
                 "planet": "hq",
                 "email": "new-astronaut@eleven-labs.com",
-                "avatar": "http:\/\/cdn.workshop-ci.local\/new-astronaut-name\/avatar.png",
+                "avatar": "http://cdn.workshop-ci.local/new-astronaut-name/avatar.png",
                 "createdAt": {
                     "date": "2022-01-16 14:30:30.000000",
                     "timezone_type": 3,
@@ -239,7 +239,7 @@ describe('test "astronautsClient" module', () => {
                 "username": "new raccoon",
                 "planet": "raccoons-of-asgard",
                 "email": "new-raccoon@eleven-labs.com",
-                "avatar": "http:\/\/cdn.workshop-ci.local\/new-raccoon\/avatar.png",
+                "avatar": "http://cdn.workshop-ci.local/new-raccoon/avatar.png",
                 "createdAt": {
                     "date": "2022-01-16 14:30:30.000000",
                     "timezone_type": 3,

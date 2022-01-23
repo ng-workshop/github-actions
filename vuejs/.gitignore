@@ -4,6 +4,7 @@
 /node_modules
 /tests/e2e/screenshots
 /tests/e2e/videos
+/eslint-junit.xml
 
 # local env files
 .env.local
