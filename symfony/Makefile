@@ -1,12 +1,12 @@
 COMPOSER_ARGS :=
-CI ?= false
+CI_TYPE ?=
 
 ifeq ($(APP_ENV), prod)
 	COMPOSER_ARGS := --no-dev --optimize-autoloader $(COMPOSER_ARGS)
 endif
 
 PHPMD_ARGS := . text phpmd.xml --suffixes php
-ifdef ($(CI_TYPE),true)
+ifdef CI_TYPE
 	PHPMD_ARGS := . xml phpmd.xml --suffixes php --report-file var/reports/phpmd.xml
 endif
 

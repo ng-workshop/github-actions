@@ -34,9 +34,6 @@
             <clover outputFile="./var/reports/phpunit.xml"/>
         </report>
     </coverage>
-    <logging>
-        <junit outputFile="./var/reports/junit.xml"/>
-    </logging>
 
     <testsuites>
         <testsuite name="Project Units Test Suite">
