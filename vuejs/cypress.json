@@ -1,4 +1,9 @@
 {
   "pluginsFile": "tests/e2e/plugins/index.js",
-  "baseUrl": "http://localhost:81"
+  "baseUrl": "http://localhost:81",
+  "reporter": "junit",
+  "reporterOptions": {
+    "mochaFile": "reports/cypress/junit.xml",
+    "toConsole": false
+  }
 }

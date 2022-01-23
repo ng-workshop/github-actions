@@ -5,6 +5,6 @@
   "exclude": [
     "src/api/**"
   ],
-  "reporter": ["clover", "lcov", "text"],
-  "report-dir": "./coverage/cypress"
+  "reporter": ["lcov", "text"],
+  "report-dir": "reports/cypress"
 }

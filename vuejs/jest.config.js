@@ -15,7 +15,13 @@ module.exports = {
     "!**/jest.config.js",
     "!**/vue.config.js",
   ],
-  coverageDirectory: 'coverage/jest',
+  coverageDirectory: "reports/jest",
   coveragePathIgnorePatterns: [],
-  coverageReporters: ['clover', 'lcov', 'text']
+  coverageReporters: [
+    "lcov",
+    "text"
+  ],
+  reporters: [
+    ["jest-junit", { suiteName: "jest tests" }],
+  ]
 }
