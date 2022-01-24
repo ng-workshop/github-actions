@@ -1,8 +1,8 @@
 import { shallowMount } from '@vue/test-utils'
 import {createLocalVue} from '../../helpers'
 
-import ButtonIcon from '@/components/Common/ButtonIcon'
-import Link from '@/props/link'
+import ButtonIcon from '../../../../src/components/Common/ButtonIcon'
+import { Link } from '../../../../src/props'
 
 const createWrapper = (type = null) => shallowMount(ButtonIcon, {
     localVue: createLocalVue({ withBootstrap: true }),

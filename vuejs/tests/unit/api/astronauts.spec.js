@@ -1,8 +1,8 @@
-import axiosClient from '@/api/axios-client'
-import ApiError from '@/api/error'
-import astronautsClient from '@/api/astronauts'
+import axiosClient from '../../../src/api/axios-client'
+import ApiError from '../../../src/api/error'
+import astronautsClient from '../../../src/api/astronauts'
 
-jest.mock('@/api/axios-client')
+jest.mock('../../../src/api/axios-client')
 
 describe('test "astronautsClient" module', () => {
     beforeEach(() => {

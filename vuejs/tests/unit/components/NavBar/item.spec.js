@@ -3,8 +3,8 @@ import VueRouter from 'vue-router'
 
 import { createLocalVue } from '../../helpers'
 
-import NavBarItem from '@/components/NavBar/Item'
-import Link from '@/props/link'
+import NavBarItem from '../../../../src/components/NavBar/Item'
+import { Link } from '../../../../src/props'
 
 describe('test "NavBarItem" component', () => {
     const link = new Link({ title: 'link 1', name: 'link-1' })

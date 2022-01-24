@@ -1,5 +1,4 @@
-import { getAuthorizedImageFormat, getImageMetadata } from '../utils/file';
-import { capitalize } from '../utils/formatter'
+import { getAuthorizedImageFormat, getImageMetadata, capitalize } from '../utils';
 
 const imageFormat = {
     params: [{ name: 'formats', default: ['all'] }],

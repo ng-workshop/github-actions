@@ -1,4 +1,4 @@
-import { arrayToString, dateToString, capitalize } from '@/utils/formatter'
+import { arrayToString, dateToString, capitalize } from '../../../src/utils'
 
 describe('test "formatter" package', () => {
     describe('test "arrayToString" function', () => {

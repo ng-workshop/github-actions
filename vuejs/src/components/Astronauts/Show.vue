@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import Astronaut from '@/props/astronaut';
+import { Astronaut } from '../../props';
 
 export default {
   name: 'astronauts-show',

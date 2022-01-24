@@ -1,5 +1,5 @@
-import astronautAvatarClient from '@/api/astronauts-avatar'
-import { fileToBase64 } from '@/utils/file'
+import astronautAvatarClient from '../../api/astronauts-avatar'
+import { fileToBase64 } from '../../utils'
 
 export const state = {
     tmpFilename: null,

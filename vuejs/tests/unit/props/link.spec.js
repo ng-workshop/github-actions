@@ -1,4 +1,4 @@
-import Link from '@/props/link'
+import { Link } from '../../../src/props'
 
 describe('Test "link" props', () => {
     test('Test create "link" from constructor', () => {

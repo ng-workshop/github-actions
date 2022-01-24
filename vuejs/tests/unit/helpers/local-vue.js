@@ -2,7 +2,6 @@ import {createLocalVue as testUtilsCreateLocalVue} from "@vue/test-utils";
 
 import { useBootstrap, useFilters, useGlobalFunctions, useRouter } from './index'
 
-
 export const createLocalVue = ({
    withBootstrap = false,
    withFilter = false,

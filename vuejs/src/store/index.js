@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import astronaut from '@/store/modules/astronaut';
-import astronauts from '@/store/modules/astronauts';
-import astronautsAvatar from '@/store/modules/astronauts-avatar';
-import loader from '@/store/modules/loader';
+import astronaut from './modules/astronaut'
+import astronauts from './modules/astronauts'
+import astronautsAvatar from './modules/astronauts-avatar'
+import loader from './modules/loader'
 
 Vue.use(Vuex)
 

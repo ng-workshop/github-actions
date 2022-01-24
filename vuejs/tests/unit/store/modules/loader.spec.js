@@ -1,4 +1,4 @@
-import { state, mutations, actions, getters } from '@/store/modules/loader'
+import { state, mutations, actions, getters } from '../../../../src/store/modules/loader'
 
 describe('Test "loader" store', () => {
     test('Test mutations "SET_STATE"', () => {

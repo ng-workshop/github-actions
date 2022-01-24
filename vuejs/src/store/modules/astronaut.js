@@ -1,4 +1,4 @@
-import astronautClient from '@/api/astronauts'
+import astronautClient from '../../api/astronauts'
 
 export const state = {
     id: null,

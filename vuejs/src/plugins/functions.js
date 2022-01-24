@@ -1,7 +1,6 @@
 import Vue from 'vue'
 
-import { dateToString } from "@/utils/formatter"
-import { getLinksInNav } from '@/utils/router'
+import { dateToString, getLinksInNav } from "../utils"
 
 const Function = {
     install(Vue) {

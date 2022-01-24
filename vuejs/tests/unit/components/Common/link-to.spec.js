@@ -1,8 +1,8 @@
 import { mount } from '@vue/test-utils'
 import { createLocalVue, createRouter } from '../../helpers'
 
-import LinkTo from '@/components/Common/LinkTo'
-import Link from '@/props/link'
+import LinkTo from '../../../../src/components/Common/LinkTo'
+import { Link } from '../../../../src/props'
 
 describe('Test "LinkTo" components', () => {
     test('Test rendres to "LinkTo" components', () => {

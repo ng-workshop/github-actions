@@ -1,5 +1,4 @@
-import Astronaut from '@/props/astronaut'
-import Link from '@/props/link'
+import { Astronaut, Link } from '../../../src/props'
 
 describe('Test "astronaut" props', () => {
     test('Test create "astronauts" from constructor', () => {

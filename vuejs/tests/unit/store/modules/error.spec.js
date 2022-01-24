@@ -1,4 +1,4 @@
-import { state, mutations, actions, getters } from '@/store/modules/error'
+import { state, mutations, actions, getters } from '../../../../src/store/modules/error'
 
 const commit = (action, value) => {
     switch (action) {

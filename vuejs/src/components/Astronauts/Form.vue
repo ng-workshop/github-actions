@@ -138,7 +138,7 @@
 </template>
 
 <script>
-import Astronaut from '@/props/astronaut'
+import { Astronaut } from '../../props'
 import Loader from '@/components/Common/Loader'
 
 export default {

@@ -1,5 +1,5 @@
-import astronautsClient from '@/api/astronauts'
-import Astronaut from '@/props/astronaut'
+import astronautsClient from '../../api/astronauts'
+import { Astronaut } from '../../props'
 
 export const state = {
     items: [],

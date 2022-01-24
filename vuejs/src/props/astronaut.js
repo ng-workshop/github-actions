@@ -1,5 +1,5 @@
-import Link from '@/props/link'
-import { getRouteByName } from '@/utils/router'
+import Link from './link'
+import { getRouteByName } from '../utils'
 
 export default class {
     constructor({

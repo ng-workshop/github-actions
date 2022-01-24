@@ -1,4 +1,4 @@
-import { capitalize } from '@/utils/formatter'
+import { capitalize } from '../../../src/utils'
 
 export const useFilters = localVue => {
     localVue.filter('capitalize', capitalize);

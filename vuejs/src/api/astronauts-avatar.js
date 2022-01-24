@@ -1,5 +1,5 @@
-import axiosClient from '@/api/axios-client'
-import ApiError from '@/api/error'
+import axiosClient from './axios-client'
+import ApiError from './error'
 
 const BASE_PATH = '/astronauts/avatars'
 

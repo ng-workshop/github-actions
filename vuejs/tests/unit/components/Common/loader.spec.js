@@ -1,7 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import { createLocalVue } from '../../helpers'
 
-import Loader from '@/components/Common/Loader'
+import Loader from '../../../../src/components/Common/Loader'
 
 describe('test "Loader" component', () => {
     test('test render "Loader" component', () => {

@@ -1,5 +1,4 @@
-import { arrayToString } from '../utils/formatter'
-import { getPlanetIds, getPlanetNames } from '../utils/planet'
+import { arrayToString, getPlanetIds, getPlanetNames } from '../utils'
 
 const planetChoices = {
     validate: value => getPlanetIds().includes(value),

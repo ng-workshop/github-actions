@@ -1,8 +1,8 @@
 import { shallowMount } from '@vue/test-utils'
 import { createLocalVue } from '../../helpers'
 
-import NavBar from '@/components/NavBar/Index'
-import Link from '@/props/link'
+import NavBar from '../../../../src/components/NavBar/Index'
+import { Link } from '../../../../src/props'
 
 describe('test "NavBar" component', () => {
     const link1 = new Link({ title: 'link 1', name: 'link-1' })

@@ -1,5 +1,4 @@
-import { dateToString } from '@/utils/formatter'
-import { getLinksInNav } from '@/utils/router'
+import { dateToString, getLinksInNav } from '../../../src/utils'
 
 export const useGlobalFunctions = localVue => localVue.use({
     install(Vue) {

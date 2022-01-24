@@ -1,5 +1,5 @@
-import { routes as routesFromRouter } from '@/router'
-import Link from '@/props/link'
+import { routes as routesFromRouter } from '../router'
+import { Link } from '../props'
 
 const navLinks = {}
 

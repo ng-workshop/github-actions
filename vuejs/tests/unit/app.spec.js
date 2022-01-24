@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { createRouter, createLocalVue } from './helpers'
 
-import App from '@/App'
+import App from '../../src/App'
 
 describe('test "App"', () => {
     test('test render "App"', () => {

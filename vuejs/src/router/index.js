@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import defaults from '@/router/defaults'
-import astronauts from '@/router/astronauts'
+import defaults from './defaults'
+import astronauts from './astronauts'
 
 Vue.use(VueRouter)
 

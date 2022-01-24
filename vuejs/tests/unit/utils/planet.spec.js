@@ -1,4 +1,4 @@
-import { getPlanetIds, getPlanetNames, getPlanetSelectOptions } from '@/utils/planet'
+import { getPlanetIds, getPlanetNames, getPlanetSelectOptions } from '../../../src/utils'
 
 describe('test "planet" module', () => {
     test('test "getPlanetIds" function', () => {

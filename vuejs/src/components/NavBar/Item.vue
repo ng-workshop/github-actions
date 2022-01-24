@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Link from '@/props/link'
+import { Link } from '../../props'
 
 export default {
   name: 'nav-bar-item',

@@ -1,4 +1,4 @@
-import { getImageFormat, fileToBase64, getImageMetadata, getAuthorizedImageFormat } from '@/utils/file'
+import { getImageFormat, fileToBase64, getImageMetadata, getAuthorizedImageFormat } from '../../../src/utils'
 
 describe('test package "file"', () => {
     const file = new File(['A test file'], "test.txt", { type: "text/plain" })
