@@ -11,6 +11,8 @@ use Symfony\Component\Validator\ConstraintViolationInterface;
 final class ViolationNormalizer implements ContextAwareNormalizerInterface
 {
     /**
+     * @return array<string, mixed>
+     *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function normalize($object, string $format = null, array $context = []): array

@@ -7,7 +7,7 @@
     <description>ci-symfony rule set project</description>
 
     <arg name="report-full"/>
-    <arg name="report-junit" value="./var/reports/phpcs.xml"/>
+    <arg name="report-\Micheh\PhpCodeSniffer\Report\Gitlab" value="./var/reports/phpcs.json"/>
     <arg name="cache" value="./var/cache/.phpcs-cache"/>
 
     <!-- Analyze files and directories -->

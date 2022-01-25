@@ -6,7 +6,7 @@
     <description>ci-symfony security audit rule set project</description>
 
     <arg name="report-full"/>
-    <arg name="report-junit" value="./var/reports/phpcs-security-audit.xml"/>
+    <arg name="report-\Micheh\PhpCodeSniffer\Report\Gitlab" value="./var/reports/phpcs-security-audit.json"/>
 
     <!-- Analyze files and directories -->
     <file>bin/</file>

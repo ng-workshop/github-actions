@@ -36,11 +36,8 @@ final class ViolationNormalizerTest extends TestCase
 
         $normalizedViolations = $this->violationNormalizer->normalize($violationException);
 
-        // @phpstan-ignore-next-line
         $this->assertCount(1, $normalizedViolations);
-        // @phpstan-ignore-next-line
         $this->assertCount(1, $normalizedViolations['error']);
-        // @phpstan-ignore-next-line
         $this->assertEquals('Violation message', $normalizedViolations['error']['property_path'][0]);
     }
 
@@ -69,13 +66,9 @@ final class ViolationNormalizerTest extends TestCase
 
         $normalizedViolations = $this->violationNormalizer->normalize($violationException);
 
-        // @phpstan-ignore-next-line
         $this->assertCount(1, $normalizedViolations);
-        // @phpstan-ignore-next-line
         $this->assertCount(2, $normalizedViolations['errors']);
-        // @phpstan-ignore-next-line
         $this->assertEquals('Violation message 1', $normalizedViolations['errors']['property_path_1'][0]);
-        // @phpstan-ignore-next-line
         $this->assertEquals('Violation message 2', $normalizedViolations['errors']['property_path_2'][0]);
     }
 
