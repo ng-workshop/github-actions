@@ -12,16 +12,8 @@ ifeq ($(APP_ENV), prod)
 	COMPOSER_ARGS := --no-dev --optimize-autoloader $(COMPOSER_ARGS)
 endif
 
-<<<<<<< Updated upstream
-PHPMD_ARGS := . text phpmd.xml --suffixes php
-ifdef CI_TYPE
-	PHPMD_ARGS := . xml phpmd.xml --suffixes php --report-file var/reports/phpmd.xml
-endif
-
-=======
->>>>>>> Stashed changes
 ifeq ($(CI_TYPE), gitlab)
-	PHPSTAN_ARGS :=  --error-format gitlab > var/reports/phpstan.json
+	PHPSTAN_ARGS := --error-format gitlab > var/reports/phpstan.json
 else ifeq ($(CI_TYPE), github)
 	PHPSTAN_ARGS := --error-format github > var/reports/phpstan.json
 else
@@ -66,13 +58,8 @@ ifneq ($(APP_ENV), prod)
 	@bin/console doctrine:fixtures:load --purge-with-truncate --no-interaction --env $(APP_ENV)
 endif
 
-<<<<<<< Updated upstream
 phpmd: var/reports
-	@php ./vendor/bin/phpmd $(PHPMD_ARGS)
-=======
-phpmd:
 	@bin/phpmd
->>>>>>> Stashed changes
 
 phpcs: var/reports
 	@php ./vendor/bin/phpcs
