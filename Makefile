@@ -5,12 +5,7 @@ include .env
 	@touch $@
 
 setup: .env.docker.local
-ifndef USER_ID
-	@echo "USER_ID=$(shell id -u)" >> .env.docker.local
-endif
-ifndef GROUP_ID
-	@echo "GROUP_ID=$(shell id -u)" >> .env.docker.local
-endif
+	bin/configure
 
 start:
 	@docker-compose up -d --force-recreate
