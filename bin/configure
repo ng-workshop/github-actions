@@ -1,17 +1,11 @@
 #!/usr/bin/env sh
 
-configure_docker()
 DOCKER_LOCAL_ENV_FILE=.env.docker.local
 
 configure_global()
 {
-  if [ ! -f .env.docker.local ]
   if [ ! -f "${DOCKER_LOCAL_ENV_FILE}" ]
   then
-    {
-      echo USER_ID="$(id -u)"
-      echo GROUP_ID="$(id -g)"
-    } >> .env.docker.local
     touch "${DOCKER_LOCAL_ENV_FILE}"
   fi
 }
