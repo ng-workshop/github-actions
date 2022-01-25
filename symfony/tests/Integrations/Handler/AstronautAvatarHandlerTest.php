@@ -12,6 +12,9 @@ use League\Flysystem\FilesystemOperator;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
+/**
+ * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ */
 final class AstronautAvatarHandlerTest extends KernelTestCase
 {
     use ProphecyTrait;

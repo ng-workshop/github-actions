@@ -10,7 +10,10 @@ use Symfony\Component\Validator\ConstraintViolationInterface;
 
 final class ViolationNormalizer implements ContextAwareNormalizerInterface
 {
-    public function normalize($object, string $format = null, array $context = [])
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public function normalize($object, string $format = null, array $context = []): array
     {
         $formattedViolationList = [];
 
@@ -25,6 +28,9 @@ final class ViolationNormalizer implements ContextAwareNormalizerInterface
         return [$errorMessage => $formattedViolationList];
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function supportsNormalization($data, string $format = null, array $context = []): bool
     {
         return $data instanceof ViolationException;

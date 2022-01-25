@@ -18,6 +18,8 @@ final class AstronautNormalizer implements ContextAwareNormalizerInterface
 
     /**
      * @return array<string, array<string, array<int, string>>>
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function normalize($object, string $format = null, array $context = []): array
     {
@@ -29,6 +31,9 @@ final class AstronautNormalizer implements ContextAwareNormalizerInterface
         return $data;
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function supportsNormalization($data, string $format = null, array $context = []): bool
     {
         return $data instanceof Astronaut;

@@ -11,6 +11,8 @@ abstract class AbstractValidator implements EntityValidatorInterface
 {
     /**
      * @throws ViolationException
+     *
+     * @SuppressWarnings(PHPMD.StaticAccess)
      */
     public function validate(mixed $value, bool $partial): void
     {

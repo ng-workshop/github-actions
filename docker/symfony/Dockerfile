@@ -23,6 +23,7 @@ RUN apk update \
         curl \
         git \
         icu \
+        jq \
         libzip \
         make \
         ncurses \

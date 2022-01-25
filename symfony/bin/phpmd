@@ -1,8 +1,63 @@
-#!/usr/bin/env php
-<?php
+#!/usr/bin/env sh
 
-declare(strict_types=1);
+init()
+{
+  CACHE_DIR=var/cache
+  CACHE_FILE_ERRORS="${CACHE_DIR}/phpmd.error"
 
-error_reporting(E_ALL ^ E_DEPRECATED);
+  mkdir -p "$CACHE_DIR"
+  echo 0 > "${CACHE_FILE_ERRORS}"
+}
 
-include './vendor/bin/phpmd';
+add_errors()
+{
+  echo $(( $(cat ${CACHE_FILE_ERRORS}) + ${?} )) > "${CACHE_FILE_ERRORS}"
+}
+
+phpmd()
+{
+  php ./vendor/bin/phpmd src text phpmd.xml --suffixes php || add_errors
+  php ./vendor/bin/phpmd tests text phpmd.xml --suffixes php || add_errors
+}
+
+phpmd_ci()
+{
+  REPORT_DIR=$(pwd)/var/reports
+  DEFAULT_JSON_REPORT='{"version": "@package_version@", "package": "phpmd", "timestamp": "2022-01-25T11:36:38+00:00", "files": []}'
+  PHPMD_JSON_REPORT_SRC_FILE="${REPORT_DIR}/phpmd-src.json"
+  PHPMD_JSON_REPORT_TESTS_FILE="${REPORT_DIR}/phpmd-tests.json"
+
+  jq -n "${DEFAULT_JSON_REPORT}" > "${PHPMD_JSON_REPORT_SRC_FILE}"
+  jq -n "${DEFAULT_JSON_REPORT}" > "${PHPMD_JSON_REPORT_TESTS_FILE}"
+
+  php ./vendor/bin/phpmd src json phpmd.xml --suffixes php --report-file "${PHPMD_JSON_REPORT_SRC_FILE}" || add_errors
+  php ./vendor/bin/phpmd tests json phpmd.xml --suffixes php --report-file "${PHPMD_JSON_REPORT_TESTS_FILE}" || add_errors
+
+  jq '[.files | .[] | .file as $filename | .violations | {type: "issue", "categories": ["Style", "PHP"], "check_name":.[].rule, "fingerprint": ("\($filename):\(.[].beginLine):\(.[].rule)"), "description":.[].description, "location": {"path": $filename, "lines": {"begin":.[].beginLine, "end":.[].endLine }}} ]' < "${PHPMD_JSON_REPORT_SRC_FILE}" > "${REPORT_DIR}/codequality_phpmd_src.json"
+  jq '[.files | .[] | .file as $filename | .violations | {type: "issue", "categories": ["Style", "PHP"], "check_name":.[].rule, "fingerprint": ("\($filename):\(.[].beginLine):\(.[].rule)"), "description":.[].description, "location": {"path": $filename, "lines": {"begin":.[].beginLine, "end":.[].endLine }}} ]' < "${PHPMD_JSON_REPORT_TESTS_FILE}" > "${REPORT_DIR}/codequality_phpmd_tests.json"
+
+  jq -s '[.[][]]' "${REPORT_DIR}"/codequality_phpmd_*.json > "${REPORT_DIR}/phpmd.json"
+
+  rm -f "${PHPMD_JSON_REPORT_SRC_FILE}" "${PHPMD_JSON_REPORT_TESTS_FILE}" "${REPORT_DIR}"/codequality_phpmd_*.json
+}
+
+get_exist_code()
+{
+  cat ${CACHE_FILE_ERRORS}
+}
+
+main()
+{
+  init
+
+  if [ -n "${CI_TYPE}" ]
+  then
+    phpmd_ci
+  else
+    phpmd
+  fi
+
+  exit "$(get_exist_code)"
+}
+
+main

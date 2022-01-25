@@ -1,15 +1,25 @@
 COMPOSER_ARGS :=
 CI_TYPE ?=
 
+RED=\e[31m
+GREEN=\e[32m
+YELLOW=\e[33m
+BLUE=\e[34m
+BOLD=\e[1m
+RESET=\e[0m
+
 ifeq ($(APP_ENV), prod)
 	COMPOSER_ARGS := --no-dev --optimize-autoloader $(COMPOSER_ARGS)
 endif
 
+<<<<<<< Updated upstream
 PHPMD_ARGS := . text phpmd.xml --suffixes php
 ifdef CI_TYPE
 	PHPMD_ARGS := . xml phpmd.xml --suffixes php --report-file var/reports/phpmd.xml
 endif
 
+=======
+>>>>>>> Stashed changes
 ifeq ($(CI_TYPE), gitlab)
 	PHPSTAN_ARGS :=  --error-format gitlab > var/reports/phpstan.json
 else ifeq ($(CI_TYPE), github)
@@ -17,15 +27,6 @@ else ifeq ($(CI_TYPE), github)
 else
 	PHPSTAN_ARGS :=
 endif
-
-BACKUP_APP_ENV := $(shell cat .env | grep "APP_ENV" | cut -d= -f2)
-
-RED=\e[31m
-GREEN=\e[32m
-YELLOW=\e[33m
-BLUE=\e[34m
-BOLD=\e[1m
-RESET=\e[0m
 
 define HELP
 $(BLUE)make [TARGET]$(RESET)
@@ -65,8 +66,13 @@ ifneq ($(APP_ENV), prod)
 	@bin/console doctrine:fixtures:load --purge-with-truncate --no-interaction --env $(APP_ENV)
 endif
 
+<<<<<<< Updated upstream
 phpmd: var/reports
 	@php ./vendor/bin/phpmd $(PHPMD_ARGS)
+=======
+phpmd:
+	@bin/phpmd
+>>>>>>> Stashed changes
 
 phpcs: var/reports
 	@php ./vendor/bin/phpcs
