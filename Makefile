@@ -8,6 +8,7 @@ setup: .env.docker.local
 	bin/configure
 
 start:
+	@docker-compose pull --parallel --ignore-pull-failures
 	@docker-compose up -d --force-recreate
 
 stop:

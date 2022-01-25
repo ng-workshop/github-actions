@@ -9,7 +9,7 @@
     "test:integration": "echo test:integration",
     "test:e2e": "NODE_ENV=test vue-cli-service test:e2e --headless",
     "lint": "vue-cli-service lint",
-    "lint:ci": "mkdir -p reports/eslint && vue-cli-service lint --silent --format junit > reports/eslint/junit.xml",
+    "lint:ci": "mkdir -p reports/eslint && ESLINT_CODE_QUALITY_REPORT=reports/eslint/codequality.json vue-cli-service lint --format gitlab",
     "cypress:install": "cypress install"
   },
   "dependencies": {
@@ -38,8 +38,8 @@
     "babel-plugin-istanbul": "^6.1.1",
     "bootstrap": "^4.3.1",
     "eslint": "^6.7.2",
+    "eslint-formatter-gitlab": "^3.0.0",
     "eslint-plugin-vue": "^6.2.2",
-    "jest-junit": "^13.0.0",
     "mutationobserver-shim": "^0.3.3",
     "node-sass": "^7.0.1",
     "popper.js": "^1.16.0",
@@ -81,16 +81,6 @@
         }
       }
     ]
-  },
-  "jest-junit": {
-    "suiteName": "jest tests",
-    "outputDirectory": "reports/jest",
-    "outputName": "junit.xml",
-    "uniqueOutputName": "false",
-    "classNameTemplate": "{classname}-{title}",
-    "titleTemplate": "{classname}-{title}",
-    "ancestorSeparator": " › ",
-    "usePathForSuiteName": "true"
   },
   "browserslist": [
     "> 1%",

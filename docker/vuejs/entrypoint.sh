@@ -15,4 +15,6 @@ then
   . /home/vuejs/.bashrc
 fi
 
+sudo chown --recursive vuejs:vuejs "${YARN_FOLDER}" "${NPM_FOLDER}"
+
 exec "$@"

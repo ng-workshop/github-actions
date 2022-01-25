@@ -1,4 +1,4 @@
-export default class {
+export class Link {
     constructor({ title, name, params = {}, query = {}, meta ={} }) {
         this.title = title
         this.name = name

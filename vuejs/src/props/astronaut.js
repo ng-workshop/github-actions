@@ -1,7 +1,7 @@
-import Link from './link'
+import { Link } from './link'
 import { getRouteByName } from '../utils'
 
-export default class {
+export class Astronaut {
     constructor({
         id = null,
         username,

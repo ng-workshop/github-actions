@@ -1,6 +1,8 @@
 describe('Load Home page', () => {
   it('Visits the home page', () => {
     cy.visit('/')
+    cy.screenshot()
+
     cy.get('.navbar-brand')
         .should('exist')
         .should('have.text', 'VueJS')

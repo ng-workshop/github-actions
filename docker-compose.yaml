@@ -3,8 +3,6 @@ version: '3.9'
 services:
   nginx:
     image: nginx:1.20-alpine
-    build:
-      context: ./docker/nginx
     volumes:
       - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./docker/nginx/conf.d:/etc/nginx/conf.d
@@ -65,6 +63,8 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       workshop-ci_network:
+        aliases:
+          - postgres.workshop-ci.local
         ipv4_address: 10.11.11.5
 
   ftp:
@@ -75,6 +75,8 @@ services:
       - ./.ssh/id_workshop-ci.pub:/home/symfony/.ssh/id_workshop-ci.pub
     networks:
       workshop-ci_network:
+        aliases:
+          - ftp.workshop-ci.local
         ipv4_address: 10.11.11.6
 
 networks:

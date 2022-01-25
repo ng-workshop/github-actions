@@ -73,7 +73,7 @@ phpcs-security-audit: var/reports
 lint: phpmd phpcs phpstan phpcs-security-audit
 
 phpunit: var/reports
-	@php ./vendor/bin/phpunit
+	@php ./vendor/bin/phpunit $(PHP_UNIT_ARGS)
 
 behat: var/reports ## Run this target with APP_ENV=test for use database test
 	@make --silent setup-database

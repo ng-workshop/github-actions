@@ -1,14 +1,27 @@
 #!/usr/bin/env sh
 
 configure_docker()
+DOCKER_LOCAL_ENV_FILE=.env.docker.local
+
+configure_global()
 {
   if [ ! -f .env.docker.local ]
+  if [ ! -f "${DOCKER_LOCAL_ENV_FILE}" ]
   then
     {
       echo USER_ID="$(id -u)"
       echo GROUP_ID="$(id -g)"
     } >> .env.docker.local
+    touch "${DOCKER_LOCAL_ENV_FILE}"
   fi
+}
+
+configure_docker()
+{
+  {
+    echo USER_ID="$(id -u)"
+    echo GROUP_ID="$(id -g)"
+  } >> "${DOCKER_LOCAL_ENV_FILE}"
 }
 
 configure_hosts()
@@ -37,6 +50,8 @@ configure_ssh()
 
 main()
 {
+  configure_global
+
   case "${1}" in
     docker)
       configure_docker

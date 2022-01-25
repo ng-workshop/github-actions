@@ -17,12 +17,8 @@ module.exports = {
   ],
   coverageDirectory: "reports/jest",
   coveragePathIgnorePatterns: [],
-  coverageReporters: [
-    "lcov",
-    "text"
-  ],
-  reporters: [
-    "default",
-    ["jest-junit", { suiteName: "jest tests" }],
-  ],
+  coverageReporters: ["lcov", "text", "cobertura"],
+  transformIgnorePatterns: [
+    "node_modules/(?!(babel-jest|jest-vue-preprocessor)/)"
+  ]
 }

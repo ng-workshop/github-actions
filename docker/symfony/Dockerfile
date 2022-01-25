@@ -30,6 +30,7 @@ RUN apk update \
         openssh \
         postgresql-dev \
         shadow \
+        sshpass \
         sudo \
         zlib \
     && docker-php-ext-install intl opcache pdo_pgsql pgsql zip \
